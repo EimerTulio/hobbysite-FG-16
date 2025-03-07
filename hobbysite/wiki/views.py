@@ -9,19 +9,19 @@ class ArticleListView(ListView):
     template_name = 'article_list.html'
     
 class ArticleDetailView(DetailView):
-    model = ArticleCategory
+    model = Article
     template_name = 'article_detail.html'
     
 def article_list(request):
     articles = ArticleCategory.objects.all()
     ctx = {
-        "Articles" : articles
+        "articles" : articles
     }
     return render(request, 'article_list.html', ctx)
 
 def article(request):
-    article = Article.objects.all().order_by('-created_on')
+    articles = Article.objects.all() # .order_by('-created_on')
     ctx = {
-        "Article" : article
+        "articles" : articles
     }
     return render(request, 'article_detail.html', ctx)

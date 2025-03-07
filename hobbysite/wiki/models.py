@@ -8,10 +8,10 @@ class ArticleCategory(models.Model):
         return '{}: ArticleCategory'.format(self.name)
     
     def get_absolute_url(self):
-        return reverse('article', args=[self.pk])
+        return reverse('wiki:article/detail', args=[self.pk])
     
-    class Ordering:
-        ordering = ['-created on']
+    class Meta:
+        ordering = ['name']
     
 class Article(models.Model):
     title = models.CharField(max_length=255)
@@ -25,7 +25,10 @@ class Article(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField( auto_now=True)
     
-    class Ordering:
-        ordering = ['-created on']
+    def __str__(self):
+        return '{}: Article'.format(self.title)
+    
+    class Meta:
+        ordering = ['-created_on']
     
     
