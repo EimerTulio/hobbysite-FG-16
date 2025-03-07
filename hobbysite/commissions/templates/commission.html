@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "commission-list-main-background">
+    <h1 class="page-title-list">Commission List</h1>
+
+    <p class = "commission-number">Total commissions: {{ commissions|length }}</p>
+
+    {% if commissions %}
+    <div class = 'commission-list-background'>
+        <ul class="commission-list">
+            {% for commission in commissions %}
+                <li class="post-categories">
+                    <a class = "commission-link" href="{% url 'commissions:commission_detail' commission.id %}" class="category-url">
+                        {{ commission.title }}
+                    </a> 
+                    <span class="people-required">({{ commission.people_required }} people required)</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="home-description">No commissions available.</p>
+    {% endif %}
+    </div>
+</div>
+
+    <a href="javascript:history.back()" class="back-button">Back</a>
+{% endblock %}
