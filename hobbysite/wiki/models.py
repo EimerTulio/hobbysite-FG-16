@@ -10,6 +10,9 @@ class ArticleCategory(models.Model):
     def get_absolute_url(self):
         return reverse('article', args=[self.pk])
     
+    class Ordering:
+        ordering = ['-created on']
+    
 class Article(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(
@@ -19,7 +22,10 @@ class Article(models.Model):
         null=True
     )
     entry = models.TextField()
-    created_on = models.DateTimeField(null=False, auto_now_add=True)
-    updated_on = models.DateTimeField(null=False, auto_now=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField( auto_now=True)
+    
+    class Ordering:
+        ordering = ['-created on']
     
     
