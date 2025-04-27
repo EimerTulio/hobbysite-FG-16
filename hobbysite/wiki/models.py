@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 class ArticleCategory(models.Model):
+    '''ArticleCategory model for wiki articles'''
     name = models.CharField(max_length=255)
     description = models.TextField()
     def __str__(self):
@@ -14,6 +15,7 @@ class ArticleCategory(models.Model):
         ordering = ['name']
     
 class Article(models.Model):
+    '''Article model for wiki articles'''
     title = models.CharField(max_length=255)
     category = models.ForeignKey(
         ArticleCategory,

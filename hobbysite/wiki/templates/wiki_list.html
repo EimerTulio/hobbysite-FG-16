@@ -6,7 +6,7 @@
 <body>
     <h1>Wiki Articles</h1> 
     <br>
-    {% for articles in object_list %}
+    {% for articles in articles %}
         <h2> {{articles.name}} </h2>
         <h5> {{articles.description}} </h5>
         {% for article in articles.articles.all %}
