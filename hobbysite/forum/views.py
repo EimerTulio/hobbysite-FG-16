@@ -7,7 +7,7 @@ def list_view(request):
     context = {
         "categories": categories,
     }
-    return render(request, 'forum_list.html', context)
+    return render(request, 'forum/forum_list.html', context)
 
 
 def detail_view(request, pk):
@@ -15,4 +15,4 @@ def detail_view(request, pk):
     context = {
         "category": category,
     }
-    return render(request, 'forum_detail.html', context)
+    return render(request, 'forum/forum_detail.html', context)
