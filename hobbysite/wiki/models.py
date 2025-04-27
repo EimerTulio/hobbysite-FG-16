@@ -23,7 +23,7 @@ class Article(models.Model):
     )
     entry = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField( auto_now=True)
+    updated_on = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return '{}: Article'.format(self.title)
