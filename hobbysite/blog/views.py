@@ -6,8 +6,8 @@ from .models import Article, ArticleCategory
 
 def ArticleList(request):
     articles = Article.objects.all()  
-    return render(request, 'index.html', {'articles': articles})
+    return render(request, 'blog/index.html', {'articles': articles})
 
 def ArticleDetail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
-    return render(request, 'article_detail.html', {'article': article})
+    return render(request, 'blog/blog_detail.html', {'article': article})
