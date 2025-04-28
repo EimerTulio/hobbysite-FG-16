@@ -1,30 +1,30 @@
 from django.contrib import admin
-from .models import PostCategory, Post
+from .models import ThreadCategory, Thread
 
 
-class PostCategoryAdmin(admin.ModelAdmin):
-    model = PostCategory
+class ThreadCategoryAdmin(admin.ModelAdmin):
+    model = ThreadCategory
     search_fields = ('name',)
     list_display = ('name',)
     fieldsets = [
         (
-            'Post Category Information',
+            'Thread Category Information',
             {'fields': ['name', 'description']},
         ),
     ]
 
 
-class PostAdmin(admin.ModelAdmin):
-    model = Post
+class ThreadAdmin(admin.ModelAdmin):
+    model = Thread
     search_fields = ('title',)
     list_display = ('title', 'time_created')
     fieldsets = [
         (
-            'Posts Information',
+            'Threads Information',
             {'fields': ['title', 'entry', 'category']},
         ),
     ]
 
 
-admin.site.register(PostCategory, PostCategoryAdmin)
-admin.site.register(Post, PostAdmin)
+admin.site.register(ThreadCategory, ThreadCategoryAdmin)
+admin.site.register(Thread, ThreadAdmin)

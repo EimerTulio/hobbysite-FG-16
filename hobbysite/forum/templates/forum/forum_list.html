@@ -26,17 +26,18 @@
                     <li class="post-categories">
                         <div>
                             <p class="category-title">
-                                <a class="category-url" href="{{ category.get_absolute_url }}">
+                                <p>
                                     {{ category }}
-                                </a>
+                                </p>
                             </p>
                             {% for post in category.post_category.all %}
-                                <p class="post-title">{{ post.title }}</p>
+                                <a href="{{post.get_absolute_url}}">{{ post.title }}</p>
                             {% endfor %}
                         </div>
                     </li>
                 {% endfor %}
             </ul>
+            <a href="{% url 'forum:thread-add' %}">Create Thread</a>
         </div>
     </div>
 {% endblock %}
