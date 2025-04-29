@@ -14,5 +14,7 @@
     {{form}}
     <input type="submit" value="Submit">
 </form>
-
+{% if user.is_authenticated %}
+    <a href="{% url 'user_management:logout' %}">Logout</a>
+{% endif %}
 {% endblock %}
