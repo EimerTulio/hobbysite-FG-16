@@ -11,9 +11,9 @@ from .models import Product
 class MerchListView(ListView):
     """A view that shows a list of merch."""
     model = Product
-    template_name = 'merchstore/merch_list.html'
+    template_name = 'merchstore/merchstore_list.html'
 
 class MerchDetailView(DetailView):
     """A view that shows details about a product."""
     model = Product
-    template_name = 'merchstore/merch_detail.html'
+    template_name = 'merchstore/merchstore_detail.html'
