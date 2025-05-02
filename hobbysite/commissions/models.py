@@ -12,7 +12,7 @@ class Commission(models.Model):
         return self.title
     
     class Meta:
-        ordering = ['-created on']
+        ordering = ['-created_on']
 
     def get_absolute_url(self):
         return reverse('commissions:commissions-detail', args=[self.pk])
@@ -27,4 +27,4 @@ class Comment(models.Model):
         return f'Comment on {self.commission.title}'
     
     class Meta:
-        ordering = ['-created on']
+        ordering = ['-created_on']
