@@ -10,8 +10,9 @@ def profile_register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            Profile.objects.create(user=user)
             login(request, user)
-            return redirect('')
+            return redirect('homepage:index')
     else:
         form = RegisterForm()
 
@@ -25,7 +26,7 @@ def profile_create_view(request):
             profile = form.save(commit=False)
             profile.user = request.user  # Associate with logged in user
             profile.save()
-            return redirect('')
+            return redirect('homepage:index')
     else:
         form = ProfileForm()
 
@@ -38,7 +39,7 @@ def profile_update_view(request):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('') 
+            return redirect('homepage:index') 
     else:
         form = ProfileForm(instance=profile)
     
@@ -57,7 +58,7 @@ def profile_login_view(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('') 
+                return redirect('homepage:index') 
             else:
                 form.add_error(None, "Invalid username or password")
                 print("Authentication failed: Invalid credentials")
