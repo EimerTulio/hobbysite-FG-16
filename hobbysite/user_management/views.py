@@ -1,10 +1,21 @@
-from django.shortcuts import render, HttpResponse, redirect
 from .models import Profile
-from .forms import ProfileForm, LoginForm
+from .forms import ProfileForm, LoginForm, RegisterForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
+
+
+def profile_register_view(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'user_management/profile_register.html', {'form': form})
 
 @login_required
 def profile_create_view(request):
@@ -14,20 +25,20 @@ def profile_create_view(request):
             profile = form.save(commit=False)
             profile.user = request.user  # Associate with logged in user
             profile.save()
-            return redirect('wiki:articles/list')
+            return redirect('')
     else:
         form = ProfileForm()
 
     return render(request, 'user_management/profile_add.html', {'form': form})
 
-
+@login_required
 def profile_update_view(request):
-    profile = request.user.profile  # Get the current user's profile
+    profile = request.user.profile 
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('wiki')  # or redirect to 'user_management:profile'
+            return redirect('') 
     else:
         form = ProfileForm(instance=profile)
     
@@ -42,13 +53,11 @@ def profile_login_view(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
-            # Debugging: Check if authenticate is returning a user
-            print(f"Authenticating user: {username}")
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 login(request, user)
-                return redirect('wiki:articles/list')  # Redirect to home or any page you want
+                return redirect('') 
             else:
                 form.add_error(None, "Invalid username or password")
                 print("Authentication failed: Invalid credentials")
