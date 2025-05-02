@@ -1,19 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView 
-
 from .models import Product
 
 # Create your views here.
 
-class MerchListView(ListView):
-    """A view that shows a list of merch."""
-    model = Product
-    template_name = 'merchstore/merch_list.html'
+def merch_list(request):
+    """A view that shows the list of all products."""
+    merch = Product.objects.all()
+    ctx = {
+        "merch" : merch
+    }
+    return render(request, 'merchstore/merchstore_list.html', ctx)
 
-class MerchDetailView(DetailView):
+def merch_details(request, pk):
     """A view that shows details about a product."""
-    model = Product
-    template_name = 'merchstore/merch_detail.html'
+    product = Product.objects.get(pk=pk)
+    ctx = {
+        "product" : product
+    }
+    return render(request, 'merchstore/merchstore_detail.html', ctx)

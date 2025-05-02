@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ object.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container"> 
+    <div>
+        <ul class="post-categories-head">
+            <li class="post-categories featured">Merch Details</li>
+            <li class="post-categories">
+                <div>
+                    <p class="category-title">
+                        Product Selected: <span class="orange">{{ product.name }}</span>
+                    </p>
+                    <p class="category-title">Price: {{ product.price }}</p>
+                    <p class="category-title">Category: {{ product.product_type }} </p>
+                    <p class="category-title">{{ product.description }}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
