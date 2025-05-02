@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Threads
+{% endblock %}
+
+{% block content %}
+    <div class="main-container"> 
+        <div class="content-holder">
+            <div>
+                <h2 class="forum-title">
+                    Welcome to the <span class="orange">Hobby</span>
+                    <a href="{% url 'forum:post-category' %}" class="threads">Forum</a>
+                </h2>
+                <p class="home-description">
+                    <i class="hobby-text">Hobby:</i> 
+                    Something you enjoy doing until you decide to make it your profession.
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <ul class="post-categories-head">
+                <li class="post-categories featured">Featured Content</li>
+                {% for category in categories %}
+                    <li class="post-categories">
+                        <div>
+                            <p class="category-title">
+                                <a class="category-url" href="{{ category.get_absolute_url }}">
+                                    {{ category }}
+                                </a>
+                            </p>
+                            {% for post in category.post_category.all %}
+                                <p class="post-title">{{ post.title }}</p>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

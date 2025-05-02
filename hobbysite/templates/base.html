@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content=width=device-width, initial-scale=1" />
+		<title>{% block title %} Title {% endblock %}</title>
+		{% block styles %}{% endblock %}
+	</head>
+	<body>
+		<header>
+			<nav>
+			<ul>
+				<li><a href="">Home</a></li>
+				<li><a href="merchstore/items">Merchstore</a></li>
+				<li><a href="commissions/list">Commissions</a></li>
+				<li><a href="wiki/articles">Wiki</a></li>
+				<li><a href="blog/articles">Blog</a></li>
+				<li><a href="forum/threads">Forum</a></li>
+			</ul>
+			</nav>
+			</header>
+		{% block content %}
+		{% endblock %}
+	</body>
+</html>
