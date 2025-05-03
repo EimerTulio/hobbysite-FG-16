@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from user_management.models import Profile
 
 class ThreadCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -20,7 +20,7 @@ class ThreadCategory(models.Model):
 
 class Thread(models.Model):
     title = models.CharField(max_length=255)
-    #author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
     category = models.ForeignKey(
         ThreadCategory,
         null=True,
@@ -29,8 +29,8 @@ class Thread(models.Model):
     )
     entry = models.TextField()
     image = models.ImageField(upload_to="images/", blank=True, null=True)
-    time_created = models.DateTimeField(auto_now_add=True)  # Only sets the time when it's created
-    time_updated = models.DateTimeField(auto_now=True)  # Updates timestamp every time the object is saved
+    time_created = models.DateTimeField(auto_now_add=True) 
+    time_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-time_created']
@@ -57,13 +57,13 @@ class ThreadContent(models.Model):
         return self.content
     
 class Comment(models.Model):
-    #author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     entry = models.TextField()
-    time_created = models.DateTimeField(auto_now_add=True)  # Only sets the time when it's created
-    time_updated = models.DateTimeField(auto_now=True)  # Updates timestamp every time the object is saved
+    time_created = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now=True) 
 
     class Meta:
-        ordering = ['-time_created']
+        ordering = ['time_created']
         verbose_name = 'Comment'
         verbose_name_plural = 'Comments'
