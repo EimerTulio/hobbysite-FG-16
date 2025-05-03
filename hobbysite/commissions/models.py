@@ -11,8 +11,11 @@ class Commission(models.Model):
     def _str_(self):
         return self.title
     
-    class Ordering:
-        ordering = ['-created on']
+    class Meta:
+        ordering = ['-created_on']
+
+    def get_absolute_url(self):
+        return reverse('commissions:commissions-detail', args=[self.pk])
 
 class Comment(models.Model):
     commission = models.ForeignKey(Commission, on_delete = models.CASCADE, related_name = 'comments')
@@ -23,5 +26,5 @@ class Comment(models.Model):
     def _str_(self):
         return f'Comment on {self.commission.title}'
     
-    class Ordering:
-        ordering = ['-created on']
+    class Meta:
+        ordering = ['-created_on']
