@@ -18,4 +18,4 @@ class ThreadForm(forms.ModelForm):
 class CommentsForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields=[]
+        fields=['entry']

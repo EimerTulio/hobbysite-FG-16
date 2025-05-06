@@ -30,5 +30,14 @@
 
             <a href="{% url 'forum:thread-edit' pk=thread.pk%}">Edit Thread</a>
         </div>
+        <div>
+            {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                {{form}}
+                <input type="submit" value="Comment">
+            </form>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

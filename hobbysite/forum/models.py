@@ -20,7 +20,7 @@ class ThreadCategory(models.Model):
 
 class Thread(models.Model):
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
+    author = models.ForeignKey(Profile, null=True,on_delete=models.SET_NULL, related_name="thread")
     category = models.ForeignKey(
         ThreadCategory,
         null=True,
@@ -57,7 +57,7 @@ class ThreadContent(models.Model):
         return self.content
     
 class Comment(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
+    author = models.ForeignKey(Profile, null=True,on_delete=models.SET_NULL, related_name="thread_comment")
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     entry = models.TextField()
     time_created = models.DateTimeField(auto_now_add=True)

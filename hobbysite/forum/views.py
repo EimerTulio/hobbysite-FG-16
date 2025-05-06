@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Thread, ThreadCategory
 from django.contrib.auth.decorators import login_required
-from .forms import ThreadForm
+from .forms import ThreadForm, CommentsForm
 
 def list_view(request):
     categories = ThreadCategory.objects.all()
@@ -15,8 +15,17 @@ from django.shortcuts import render, get_object_or_404
 
 def detail_view(request, pk):
     thread = get_object_or_404(Thread, pk=pk)
+    if request.method == "POST":
+        form = CommentsForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.thread = thread
+            comment.author = request.user
+    else:
+        form = CommentsForm()
     context = {
-        "thread": thread,
+        "thread": thread, 
+        "form": form
     }
     return render(request, 'forum/forum_detail.html', context)
 
