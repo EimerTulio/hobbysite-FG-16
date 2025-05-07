@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'homepage',
     'user_management',
     'accounts'
-
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
