@@ -9,10 +9,6 @@
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Login">
-</form>
-
+Forbidden Access
+<a href="{% url 'homepage:index' %}">Back to Home</a>
 {% endblock %}

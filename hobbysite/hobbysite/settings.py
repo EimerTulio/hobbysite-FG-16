@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'blog',
     'forum',
     'homepage',
-    'user_management'
+    'user_management',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'hobbysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR/"templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,6 +136,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = 'homepage:index'
+LOGOUT_REDIRECT_URL = 'login'
 MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
