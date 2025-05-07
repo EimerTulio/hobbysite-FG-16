@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'blog',
     'forum',
     'homepage',
-    'user_management'
+    'user_management',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = 'homepage:index'
+LOGOUT_REDIRECT_URL = 'login'
