@@ -12,8 +12,10 @@
 
 <form method="post">
     {% csrf_token %}
-    {{form}}
+    {{form.as_p}}
     <input type="submit" value="Register">
 </form>
-
+<div>
+    <span>Already have an account? <a href="{% url 'login' %}">Login</a></span>
+</div>
 {% endblock %}
