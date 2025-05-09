@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content=width=device-width, initial-scale=1" />
+		<meta name="viewport" content=width=device-width, initial-scale="1" />
 		<title>{% block title %} Title {% endblock %}</title>
 		{% block styles %}{% endblock %}
 	</head>
@@ -9,12 +9,12 @@
 		<header>
 			<nav>
 			<ul>
-				<li><a href="">Home</a></li>
-				<li><a href="merchstore/items">Merchstore</a></li>
-				<li><a href="commissions/list">Commissions</a></li>
-				<li><a href="wiki/articles">Wiki</a></li>
-				<li><a href="blog/articles">Blog</a></li>
-				<li><a href="forum/threads">Forum</a></li>
+				<li><a href="{% url 'homepage:index' %}">Home</a></li>
+				<li><a href="{% url 'merchstore:merch-list' %}">Merchstore</a></li>
+				<li><a href="{% url 'commissions:commission_list' %}">Commissions</a></li>
+				<li><a href="{% url 'wiki:article/list' %}">Wiki</a></li>
+				<li><a href="{% url 'blog:article_list' %}">Blog</a></li>
+				<li><a href="{% url 'forum:post-category' %}">Forum</a></li>
 			</ul>
 			</nav>
 			</header>
