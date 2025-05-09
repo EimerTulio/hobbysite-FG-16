@@ -9,12 +9,54 @@
 		<header>
 			<nav>
 			<ul>
-				<li><a href="{% url 'homepage:index' %}">Home</a></li>
-				<li><a href="{% url 'merchstore:merch-list' %}">Merchstore</a></li>
-				<li><a href="{% url 'commissions:commission_list' %}">Commissions</a></li>
-				<li><a href="{% url 'wiki:article-list' %}">Wiki</a></li>
-				<li><a href="{% url 'blog:article_list' %}">Blog</a></li>
-				<li><a href="{% url 'forum:post-category' %}">Forum</a></li>
+				<li>
+					{% url 'homepage:index' as home_url %}
+					{% if request.path == home_url %}
+						<span>Home</span>
+					{% else %}
+						<a href="{{ home_url }}">Home</a>
+					{% endif %}
+				</li>
+				<li>
+					{% url 'merchstore:merch-list' as merch_url %}
+					{% if request.path == merch_url %}
+						<span>Merchstore</span>
+					{% else %}
+						<a href="{{ merch_url }}">Merchstore</a>
+					{% endif %}
+				</li>
+				<li>
+					{% url 'commissions:commission_list' as commissions_url %}
+					{% if request.path == commissions_url %}
+						<span>Commissions</span>
+					{% else %}
+						<a href="{{ commissions_url }}">Commissions</a>
+					{% endif %}
+				</li>
+				<li>
+					{% url 'wiki:article-list' as wiki_url %}
+					{% if request.path == wiki_url %}
+						<span>Wiki</span>
+					{% else %}
+						<a href="{{ wiki_url }}">Wiki</a>
+					{% endif %}
+				</li>
+				<li>
+					{% url 'blog:article_list' as blog_url %}
+					{% if request.path == blog_url %}
+						<span>Blog</span>
+					{% else %}
+						<a href="{{ blog_url }}">Blog</a>
+					{% endif %}
+				</li>
+				<li>
+					{% url 'forum:post-category' as forum_url %}
+					{% if request.path == forum_url %}
+						<span>Forum</span>
+					{% else %}
+						<a href="{{ forum_url }}">Forum</a>
+					{% endif %}
+				</li>
 			</ul>
 			</nav>
 			</header>
