@@ -12,7 +12,7 @@
             <ul class="post-categories-head">
                 
                     <li class="specific-post">
-                        <p>Posted on {{ thread.time_created }}</p>
+                        <p>Posted by {{thread.author}} on {{ thread.time_created }}</p>
                     </li>
                     <li class="post-entry">
                         <div>
@@ -22,22 +22,48 @@
                             <p class="post-entry-content">
                                 {{ thread.entry }}
                             </p>
+                            {% if thread.image %}
+                            {{thread.image.url}}
+                            <img src="{{thread.image.url}}" style="width:200; height:200">
+                            {% endif %}
                             <h6 class="update-text">Updated on {{ thread.time_updated }}</h6>
                         </div>
                     </li>
                 
             </ul>
-
+            {% if thread.author == profile %}
             <a href="{% url 'forum:thread-edit' pk=thread.pk%}">Edit Thread</a>
+            {% else %}
+
+            {% endif %}
         </div>
         <div>
+            <div>
+                Related Posts:
+                <ul>
+                    {% for thread in related_threads %}
+                    <li><a href="{{ thread.get_absolute_url }}">{{thread}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                {% for comment in comments %}
+                <div>
+                    <h3>{{comment.entry}}</h3> 
+                    <p>Posted by {{comment.author}}</p>
+                    <p>Posted on {{comment.time_created}}</p>
+                    <p>Edited on {{comment.time_updated}}</p>
+                </div>
+                {% endfor %}
+            </div>
             {% if user.is_authenticated %}
             <form method="post">
                 {% csrf_token %}
-                {{form}}
+                {{form.as_p}}
                 <input type="submit" value="Comment">
             </form>
             {% endif %}
+            
         </div>
     </div>
 {% endblock %}
