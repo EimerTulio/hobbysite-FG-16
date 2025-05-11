@@ -26,7 +26,10 @@ def article_add(request):
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():# https://stackoverflow.com/questions/68389156/django-how-to-set-user-create-article-is-by-user-is-logon
             article = form.save(commit=False)
-            article.author = request.user.profile
+            if request.user.is_authenticated:
+                article.author = request.user.profile
+            else:
+                article.author = None
             article.save()
             return redirect('wiki:article-list')
     

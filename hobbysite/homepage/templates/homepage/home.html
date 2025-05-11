@@ -9,10 +9,60 @@
 {% endblock %}
 
 {% block content %}
-<main>
-<h1>Add spiel here (HOME PAGE)</h1>
-</main>
-<footer>
-<h4>add developer information</h4>
-</footer>
+    <header>
+        <nav>
+        <ul>
+            <li>
+                {% url 'merchstore:merch-list' as merch_url %}
+                {% if request.path == merch_url %}
+                    <span>Merchstore</span>
+                {% else %}
+                    <a href="{{ merch_url }}">Merchstore</a>
+                {% endif %}
+            </li>
+            <li>
+                {% url 'commissions:commission_list' as commissions_url %}
+                {% if request.path == commissions_url %}
+                    <span>Commissions</span>
+                {% else %}
+                    <a href="{{ commissions_url }}">Commissions</a>
+                {% endif %}
+            </li>
+            <li>
+                {% url 'wiki:article-list' as wiki_url %}
+                {% if request.path == wiki_url %}
+                    <span>Wiki</span>
+                {% else %}
+                    <a href="{{ wiki_url }}">Wiki</a>
+                {% endif %}
+            </li>
+            <li>
+                {% url 'blog:article_list' as blog_url %}
+                {% if request.path == blog_url %}
+                    <span>Blog</span>
+                {% else %}
+                    <a href="{{ blog_url }}">Blog</a>
+                {% endif %}
+            </li>
+            <li>
+                {% url 'forum:post-category' as forum_url %}
+                {% if request.path == forum_url %}
+                    <span>Forum</span>
+                {% else %}
+                    <a href="{{ forum_url }}">Forum</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    </header>
+    <main>
+    <h1>Add spiel here (HOME PAGE)</h1>
+    </main>
+    <footer>
+    <h4>add developer information</h4>
+    </footer>
+    {% if user.is_authenticated %}
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a></p>
+    {% endif %}
 {% endblock %}
