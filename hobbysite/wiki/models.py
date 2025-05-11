@@ -47,6 +47,7 @@ class Article(models.Model):
         ordering = ['-created_on']
         
 class Comment(models.Model):
+    '''Comment model for wiki articles'''
     author = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
@@ -62,7 +63,17 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     def __str__(self):
-        return '{}: Comment'.format(self.title)
+        return '{}: Comment'.format(self.author.username)
     
     class Meta:
         ordering = ['-created_on']
+        
+class ArticleImage(models.Model):
+    '''ArticleImage model for wiki articles'''
+    image = models.ImageField(null=True, upload_to='article_images/')
+    description = models.CharField(max_length=255)
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
