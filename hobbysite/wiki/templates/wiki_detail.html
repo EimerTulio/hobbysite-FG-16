@@ -10,9 +10,17 @@
 
     <h5> {{ article.category }} 
 
+    <br> Created by: {{ article.author }} </b>
     <br> Created on {{ article.created_on }} 
-
     <br> Last Updated on {{ article.updated_on }} </h5> 
+
+    <h3> Header </h3>
+    {% if article.header_image %} 
+        <img src="{{ article.header_image.url }}" alt="Image" style="width: 300px; height: 300px;">
+    {% else %}
+        <h5> No header image uploaded </h5>
+    {% endif %}  
+    <h3> Article Content </h3>
 
     <br> {{ article.entry }} 
 
