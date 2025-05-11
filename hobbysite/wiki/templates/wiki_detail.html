@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-    <h1>Title: {{article.title}}</h1> 
-    <h5> {{article.category}}
-    <br> Created on {{article.created_on}}
-    <br> Last Updated on {{article.updated_on}} </h5>
-    <br> {{article.entry}}
-    <br>
-    <a href= {% url 'wiki:article-list'%}>Back</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %} 
+
+    Article Detail: {{ article.title }} 
+
+{% endblock %} 
+
+{% block content %} 
+    <h1>Title: {{ article.title }}</h1> 
+
+    <h5> {{ article.category }} 
+
+    <br> Created on {{ article.created_on }} 
+
+    <br> Last Updated on {{ article.updated_on }} </h5> 
+
+    <br> {{ article.entry }} 
+
+    <br> 
+
+    <a href="{% url 'wiki:article-list' %}">Back</a> 
+{% endblock %}

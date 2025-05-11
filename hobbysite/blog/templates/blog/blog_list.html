@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Blog Articles</h1>
+<ul>
+    {% for article in articles %}
+        <li>
+            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+            <br>
+            <small>Category: {{ article.category }}</small>
+            <br>
+            <small>Created on: {{ article.created_on }}</small>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

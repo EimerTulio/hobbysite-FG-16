@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commission Details</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'commission/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="page-title-detail">Commissions</h1>
+
+    <div class="commission-info">
+        <p><strong>Title:</strong> {{ commission.title }}</p>
+        <p><strong>Description:</strong> {{ commission.description }}</p>
+        <p><strong>People Required:</strong> {{ commission.people_required }}</p>
+        <p><strong>Created On:</strong> {{ commission.created_on|date:"F d, Y, h:i A" }}</p>
+        <p><strong>Last Updated:</strong> {{ commission.updated_on|date:"F d, Y, h:i A" }}</p>
+    </div>
+
+    <div class="comments-section">
+        <h2 class="section-title">Comments</h2>
+        <ul class="comment-list">
+            {% for comment in comments %}
+                <li class="comment">
+                    <strong class="comment-date">{{ comment.created_on|date:"F d, Y, h:i a" }}:</strong> 
+                    <span class="comment-text">{{ comment.entry }}</span>
+                </li>
+            {% empty %}
+                <li class="comment no-comments">No comments yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{% url 'commissions:commission_list' %}" class="back-link">Back to Commission List</a>
+</div>
+
+</body>
+</html>

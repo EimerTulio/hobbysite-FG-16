@@ -1,5 +1,5 @@
 """
-URL configuration for hobbysite project.
+URL configuration for mysite project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -18,6 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('homepage.urls', namespace='homepage')),
+    path('profile/', include('user_management.urls', namespace='profile')),
+    path("accounts/", include("django.contrib.auth.urls")),
     path('wiki/', include('wiki.urls', namespace='wiki')),
     path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls', namespace='blog')),
+    path('commissions/', include('commissions.urls',  namespace='commissions')),
+    path('merchstore/', include('merchstore.urls', namespace='merchstore')),
+    path('forum/', include('forum.urls', namespace='forum')),
 ]
