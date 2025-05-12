@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Commission{% endblock %}
+
+{% block content %}
+    <h1>Update Commission</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Commission</button>
+    </form>
+
+    <a href="{% url 'commissions:commission_list' %}" class="back-link">Back to Commission List</a>
+{% endblock %}
