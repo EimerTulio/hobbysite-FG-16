@@ -11,9 +11,9 @@
 
         <h1> Articles from Users </h1>
         {% for articles in articles %}
+            <h2> {{articles.name}} </h2>
+            <h5> {{articles.description}} </h5>
             {% if articles.articles.all %}
-                <h2> {{articles.name}} </h2>
-                <h5> {{articles.description}} </h5>
                 {% for article in articles.articles.all %}
                     {% if article.author %}
                         <li><a href="{% url 'wiki:article-detail' article.id %}">{{article.title}}</a>
@@ -32,9 +32,9 @@
 
         <h1> Articles from Anonymous Users </h1>
         {% for articles in articles %}
+            <h2> {{articles.name}} </h2>
+            <h5> {{articles.description}} </h5>
             {% if articles.articles.all %}
-                <h2> {{articles.name}} </h2>
-                <h5> {{articles.description}} </h5>
                 {% for article in articles.articles.all %}
                     {% if not article.author %}
                         <li><a href="{% url 'wiki:article-detail' article.id %}">{{article.title}}</a>
@@ -52,9 +52,9 @@
 
         <h1> All Articles </h1>
         {% for articles in articles %}
+            <h2> {{articles.name}} </h2>
+            <h5> {{articles.description}} </h5>
             {% if articles.articles.all %}
-                <h2> {{articles.name}} </h2>
-                <h5> {{articles.description}} </h5>
                 {% for article in articles.articles.all %}
                     {% if not article.author %}
                         <li><a href="{% url 'wiki:article-detail' article.id %}">{{article.title}}</a>

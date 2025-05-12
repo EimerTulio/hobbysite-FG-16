@@ -24,18 +24,18 @@
 
     <h3> Header </h3>
     {% if article.header_image %} 
-        <img src="{{ article.header_image.url }}" alt="Image" style="width: 300px; height: 300px;">
+        <img src="{{ article.header_image.url }}" alt="Image" style="width: 500px; height: 500px;">
     {% else %}
         <h5> No header image uploaded </h5>
     {% endif %}  
 
     <h3> Article Content </h3>
-    <br> {{ article.entry }} <br>
+    {{ article.entry }} <br>
 
     <h3> Article Picture Gallery </h3>
     {% if article.images.all %}
         {% for picture in article.images.all %}
-            <img src="{{ picture.image.url }}" alt="Image" style="width: 300px; height: 300px;">
+            <img src="{{ picture.image.url }}" alt="Image" style="width: 500px; height: 200px;">
         {% endfor %}
     {% else %}
         <h5> No pictures uploaded </h5>
