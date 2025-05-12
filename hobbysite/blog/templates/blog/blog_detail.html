@@ -2,7 +2,41 @@
 
 {% block content %}
 <h1>{{ article.title }}</h1>
-<p><strong>Category:</strong> {{ article.category }}</p>
+{% if article.header_image %}
+    <img src="{{ article.header_image.url }}" alt="{{ article.title }}" style="max-width: 100%;">
+{% endif %}
+<p>By {{ article.author.name }}</p>
+<p>Category: {{ article.category }}</p>
 <p>{{ article.entry }}</p>
-<p><em>Created on: {{ article.created_on }}</em></p>
+<p>Created: {{ article.created_on }} | Updated: {{ article.updated_on }}</p>
+
+{% if user.profile == article.author %}
+    <a href="{% url 'article_update' article.id %}">Edit Article</a>
+{% endif %}
+
+<h2>Related Articles</h2>
+<ul>
+    {% for related in related_articles %}
+        <li><a href="{% url 'article_detail' related.id %}">{{ related.title }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Comments</h2>
+{% for comment in comments %}
+    <div>
+        <p>{{ comment.entry }}</p>
+        <small>By {{ comment.author.name }} on {{ comment.created_on }}</small>
+    </div>
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <h3>Add Comment</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endif %}
+
+<a href="{% url 'article_list' %}">Back to Articles</a>
 {% endblock %}
