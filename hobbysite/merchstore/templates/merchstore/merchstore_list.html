@@ -8,8 +8,11 @@
     <div class="main-container"> 
         <div>
             <ul class="post-categories-head">
-                <li class="post-categories featured">Merch List</li>
+                {% url 'merchstore:merch-create' as merch_create %}
+                <p><a href="{{ merch_create }}">Create a Product</a></p>
+                <li class="post-categories featured">Your Products</li>
                 {% for product in merch %}
+                    {% if product.owner.id == user_id %}
                     <li class="post-categories">
                         <div>
                             <p class="category-title">
@@ -19,6 +22,21 @@
                             </p>
                         </div>
                     </li>
+                    {% endif %}
+                {% endfor %}
+                <li class="post-categories featured">All Products</li>
+                {% for product in merch %}
+                    {% if not product.owner.id == user_id %}
+                    <li class="post-categories">
+                        <div>
+                            <p class="category-title">
+                                <a class="category-url" href="{{ product.get_absolute_url }}">
+                                    {{ product.name }}
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

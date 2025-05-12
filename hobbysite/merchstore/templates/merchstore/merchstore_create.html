@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Add Product | Merchstore
+{% endblock %}
+
+{% block content %}
+    <div class="main-container"> 
+        <div>
+            <ul class="post-categories-head">
+                <li class="post-categories featured">create smth</li>
+                {% for product in merch %}
+                    <li class="post-categories">
+                        <div>
+                            <p class="category-title">
+                                <a class="category-url" href="{{ product.get_absolute_url }}">
+                                    {{ product.name }}
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

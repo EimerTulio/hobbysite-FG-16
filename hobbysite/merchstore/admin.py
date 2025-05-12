@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
     """Lists all products and their contents."""
     model = Product
 
-    list_display = ['name', 'price', 'product_type',]
+    list_display = ['name', 'price', 'status', 'stock', 'product_type', 'owner']
     list_filter = ['product_type', ]
     list_editable = ['price', 'product_type',]
     ordering = ['name', 'product_type', 'price',]
