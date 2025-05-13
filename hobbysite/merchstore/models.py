@@ -48,12 +48,12 @@ class Product(models.Model):
         return reverse('merchstore:merch-detail', args=[self.pk])
 
     class Meta:
-        ordering = ['name']
+        ordering = ['owner', 'name']
         verbose_name = 'product'
         verbose_name_plural = 'products'
 
 class Transaction(models.Model):
-    buyer = models.OneToOneField(Profile,
+    buyer = models.ForeignKey(Profile,
                                  on_delete=models.SET_NULL,
                                  null=True,
                                  default=None,
@@ -62,6 +62,8 @@ class Transaction(models.Model):
                                 on_delete=models.SET_NULL,
                                 null=True,
                                 related_name='transactions')
+    amount = models.IntegerField(default=1)
+
     STATUS_CHOICES = {
         "C": "On cart",
         "P": "To pay",
@@ -73,3 +75,6 @@ class Transaction(models.Model):
                               choices=STATUS_CHOICES,
                               default="C")
     created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.buyer.name + " " + self.product.name + "x" + str(self.amount) + " on " + str(self.created_on)

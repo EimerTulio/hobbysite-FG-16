@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %} 
-    {{ object.name }}
+    {{ product.name }} | Merchstore
 {% endblock %}
 
 {% block content %}
@@ -15,9 +15,24 @@
                     <p class="category-title">
                         Product Selected: <span class="orange">{{ product.name }}</span>
                     </p>
+                    {% if product.owner.id == user_id %}
+                    {% url 'merchstore:merch-update' as merch_update %}
+                    <button><a href="{{ merch_update }}">Edit</a></button>
+                    {% endif %}
                     <p class="category-title">Price: {{ product.price }}</p>
                     <p class="category-title">Category: {{ product.product_type }} </p>
+                    <p class="category-title">Seller: {{ product.owner.name }}</p>
                     <p class="category-title">{{ product.description }}</p>
+                    <p class="category-title">In stock: {{ product.stock }}</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        {% if product.stock > 0 %}
+                        <input type="submit" value="Buy">
+                        {% else %}
+                        Out of Stock
+                        {% endif %}
+                    </form>
                 </div>
             </li>
         </ul>

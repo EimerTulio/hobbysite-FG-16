@@ -14,7 +14,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     list_display = ['name', 'price', 'status', 'stock', 'product_type', 'owner']
     list_filter = ['product_type', ]
-    list_editable = ['price', 'product_type',]
+    list_editable = ['price', 'product_type', 'stock', 'status']
     ordering = ['name', 'product_type', 'price',]
 
     search_fields = ['name',]
