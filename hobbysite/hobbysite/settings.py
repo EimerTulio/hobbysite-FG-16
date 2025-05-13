@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'forum',
     'homepage',
     'user_management'
-
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
