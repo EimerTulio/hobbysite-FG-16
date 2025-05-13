@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Ressa';
+    src: url('/static/fonts/Ressa.ttf');
+}
+@font-face {
+    font-family: 'Audiowide';
+    src: url('/static/fonts/Audiowide-Regular.ttf');
+}
+@layer base {
+    body {
+        @apply bg-linear-to-b from-[#1f1f1f] via-[#252525] via-[#334d36] via-[#4d7551] to-[#33542c]
+    }
+    form {
+        
+    }
+    label {
+        @apply text-white font-audiowide uppercase
+    }
+    input {
+        @apply outline-2 outline-emerald-800 mb-3 font-audiowide focus:bg-emerald-200/20
+    }
+}
+@layer components {
+    .nav {
+        @apply text-lg active:text-emerald-400 hover:underline hover:underline-offset-4 hover:text-shadow-md hover:text-shadow-emerald-300/50;
+    }
+    .explore-btn {
+        @apply text-white font-audiowide uppercase bg-[#185d24] w-52 py-3 text-center text-lg rounded-[10px] outline-[#a5e7a4] outline-2 shadow-[#93c692] shadow-md hover:bg-[#85ff83] hover:text-[#1F1F1F] hover:outline-[#3d563d] hover:outline-[3px]
+    }
+    .main-title {
+        @apply text-[200px] font-ressa text-[#a5e7a4] text-shadow-lg text-shadow-lime-300/30
+    }
+    .forms {
+        @apply mt-32 flex flex-col w-[50%] p-5 bg-gradient-to-br from-[#365c15] via-emerald-400 to-emerald-600 rounded-xl shadow-xl outline-2 outline-emerald-200/50;
+    }
+    .submit {
+        @apply hover:bg-emerald-600 mt-4 uppercase
+    }
+    .other-btns {
+        @apply font-audiowide uppercase text-emerald-900
+    }
+    .form-text {
+        @apply text-center font-audiowide text-2xl text-emerald-900
+    }
+}
+@layer utilities {
+
+}
+@theme {
+    --font-ressa: 'Ressa', sans-serif;
+    --font-audiowide: 'Audiowide', sans-serif;
+    --width-profile: 9rem;
+}
+/* Custom CSS to prevent layout shifts */
+.dropdown-container {
+    position: relative;
+    height: 34px; /* Match your button height */
+    display: flex;
+    align-items: center;
+    margin-right: 100px; /* This pushes it to the right */
+  }
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 192px; /* Match w-36 (36 * 4 = 144px) */
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+  }
+.dropdown-container:hover .dropdown-menu {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+.nav-items-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Takes up available space */
+  }
