@@ -9,13 +9,22 @@
 {% endblock %}
 
 {% block content %}
-
-<form method="post">
+<div class="h-[500px] flex items-center justify-center">
+<form method="post" class="forms">
     {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Register">
-</form>
+    <h1 class="form-text">REGISTER PROFILE</h1>
+    <label for="username" class="">Username</label>
+    {{form.username}}
+    <label for="email" class="">Email</label>
+    {{form.email}}
+    <label for="password1" class="">Password</label>
+    {{form.password1}}
+    <label for="password2" class="">Password Confirmation</label>
+    {{form.password2}}
+    <input type="submit" value="Register" class="submit">
 <div>
-    <span>Already have an account? <a href="{% url 'login' %}">Login</a></span>
+    <span class="font-mono text-gray-800">Already have an account? <a href="{% url 'login' %}" class="other-btns hover:text-lime-200">Login</a></span>
+</div>
+</form>
 </div>
 {% endblock %}
