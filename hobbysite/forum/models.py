@@ -28,7 +28,7 @@ class Thread(models.Model):
         related_name="post_category",
     )
     entry = models.TextField()
-    image = models.ImageField(upload_to="images/", blank=True, null=True)
+    image = models.ImageField(upload_to="forum/", blank=True, null=True)
     time_created = models.DateTimeField(auto_now_add=True) 
     time_updated = models.DateTimeField(auto_now=True)
 
