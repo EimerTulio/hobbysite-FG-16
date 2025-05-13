@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from user_management.models import Profile
 
 class Commission(models.Model):
 
@@ -18,7 +19,7 @@ class Commission(models.Model):
     }
 
     title = models.CharField(max_length = 225)
-    author = models.ForeignKey('user_management.Profile', on_delete=models.CASCADE, related_name='commissions', default = 1)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='commissions', default = 1)
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Open')
     people_required = models.PositiveIntegerField()
@@ -75,7 +76,7 @@ class JobApplication(models.Model):
     ]
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='applications')
-    applicant = models.ForeignKey('user_management.Profile', on_delete=models.CASCADE)
+    applicant = models.ForeignKey(Profile, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
     applied_on = models.DateTimeField(auto_now_add=True)
 
