@@ -14,7 +14,7 @@
             <ul class="post-categories-head">
                 <li class="post-categories featured">Your Purchases</li>
                 {% for transaction in transactions %}
-                {% if transaction.buyer.id == user_id %}
+                {% if transaction.buyer.user.id == user_id %}
                     <li class="post-categories">
                         <div>
                             <a class="category-url" href="{{ transaction.product.get_absolute_url }}">
@@ -32,6 +32,9 @@
                         </div>
                         <div>
                             Status: {{ transaction.get_status_display }}
+                        </div>
+                        <div>
+                            Transaction started on: {{ transaction.created_on }}
                         </div>
                     </li>
                 {% endif %}

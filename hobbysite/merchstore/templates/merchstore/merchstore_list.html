@@ -15,8 +15,9 @@
         <div>
             <ul class="post-categories-head">
                 <li class="post-categories featured">Your Products</li>
+                {% if user.is_authenticated %}
                 {% for product in merch %}
-                    {% if product.owner.id == user_id %}
+                    {% if product.owner.user.id == user_id %}
                     <li class="post-categories">
                         <div>
                             <p class="category-title">
@@ -28,9 +29,10 @@
                     </li>
                     {% endif %}
                 {% endfor %}
+                {% endif %}
                 <li class="post-categories featured">All Products</li>
                 {% for product in merch %}
-                    {% if not product.owner.id == user_id %}
+                    {% if not product.owner.user.id == user_id %}
                     <li class="post-categories">
                         <div>
                             <p class="category-title">
