@@ -62,8 +62,8 @@
 
     <h3> Comments </h3>
     {% if request.user.is_authenticated %}
-        {% if article.comments.all %}
-            {% for comment in article.comments.all %}
+        {% if article.comment_article.all %}
+            {% for comment in article.comment_article.all %}
                 <h5> {{ comment.entry }} </h5>
                 <p> Commented by: {{ comment.author }} </p>
                 <p> Commented on: {{ comment.created_on }} </p>

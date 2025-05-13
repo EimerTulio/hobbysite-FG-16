@@ -23,13 +23,13 @@ class Article(models.Model):
     author = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
-        related_name="articles",
+        related_name="article_author",
         null=True,
     )
     category = models.ForeignKey(
         ArticleCategory,
         on_delete=models.SET_NULL,
-        related_name="articles",
+        related_name="article_category",
         null=True,
     )
     entry = models.TextField()
@@ -51,13 +51,13 @@ class Comment(models.Model):
     author = models.ForeignKey(
         Profile,
         on_delete=models.SET_NULL,
-        related_name="comments",
+        related_name="comment_author",
         null=True,
     )
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
-        related_name="comments"
+        related_name="comment_article"
     )
     entry = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
