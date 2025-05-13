@@ -1,26 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %} 
-    Edit {{product.name}} | Merchstore
+    (Edit) {{product.name}} | Merchstore
 {% endblock %}
 
 {% block content %}
     <div class="main-container"> 
+        {% url 'merchstore:merch-create' as merch_create %}
+        {% url 'merchstore:merch-cart' as merch_cart %}
+        {% url 'merchstore:merch-transactions' as merch_transactions %}
+        <a href="{{ merch_create }}">Create a Product</a>
+        <a href="{{ merch_cart }}">Cart</a>
+        <a href="{{ merch_transactions }}">Your Orders</a>
         <div>
-            <ul class="post-categories-head">
-                <li class="post-categories featured">Merch List</li>
-                {% for product in merch %}
-                    <li class="post-categories">
-                        <div>
-                            <p class="category-title">
-                                <a class="category-url" href="{{ product.get_absolute_url }}">
-                                    {{ product.name }}
-                                </a>
-                            </p>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Update">
+            </form>
         </div>
     </div>
 {% endblock %}

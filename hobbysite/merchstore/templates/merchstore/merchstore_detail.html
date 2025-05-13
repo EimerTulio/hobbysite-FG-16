@@ -7,6 +7,12 @@
 {% block content %}
 
 <div class="main-container"> 
+    {% url 'merchstore:merch-create' as merch_create %}
+    {% url 'merchstore:merch-cart' as merch_cart %}
+    {% url 'merchstore:merch-transactions' as merch_transactions %}
+    <a href="{{ merch_create }}">Create a Product</a>
+    <a href="{{ merch_cart }}">Cart</a>
+    <a href="{{ merch_transactions }}">Your Orders</a>
     <div>
         <ul class="post-categories-head">
             <li class="post-categories featured">Merch Details</li>
@@ -16,14 +22,15 @@
                         Product Selected: <span class="orange">{{ product.name }}</span>
                     </p>
                     {% if product.owner.id == user_id %}
-                    {% url 'merchstore:merch-update' as merch_update %}
-                    <button><a href="{{ merch_update }}">Edit</a></button>
+                    <a href="{{ product.get_update_url }}">Edit</a>
                     {% endif %}
+                    <p class="category-title">Status: {{ product.get_status_display }}</p>
                     <p class="category-title">Price: {{ product.price }}</p>
                     <p class="category-title">Category: {{ product.product_type }} </p>
                     <p class="category-title">Seller: {{ product.owner.name }}</p>
                     <p class="category-title">{{ product.description }}</p>
                     <p class="category-title">In stock: {{ product.stock }}</p>
+                    {% if not product.owner.id == user_id %}
                     <form method="post">
                         {% csrf_token %}
                         {{ form }}
@@ -33,6 +40,7 @@
                         Out of Stock
                         {% endif %}
                     </form>
+                    {% endif %}
                 </div>
             </li>
         </ul>

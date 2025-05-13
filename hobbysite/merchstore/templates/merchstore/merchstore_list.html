@@ -6,10 +6,14 @@
 
 {% block content %}
     <div class="main-container"> 
+        {% url 'merchstore:merch-create' as merch_create %}
+        {% url 'merchstore:merch-cart' as merch_cart %}
+        {% url 'merchstore:merch-transactions' as merch_transactions %}
+        <a href="{{ merch_create }}">Create a Product</a>
+        <a href="{{ merch_cart }}">Cart</a>
+        <a href="{{ merch_transactions }}">Your Orders</a>
         <div>
             <ul class="post-categories-head">
-                {% url 'merchstore:merch-create' as merch_create %}
-                <p><a href="{{ merch_create }}">Create a Product</a></p>
                 <li class="post-categories featured">Your Products</li>
                 {% for product in merch %}
                     {% if product.owner.id == user_id %}

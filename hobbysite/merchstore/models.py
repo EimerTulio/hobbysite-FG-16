@@ -26,7 +26,7 @@ class Product(models.Model):
                                      on_delete=models.SET_NULL,
                                      null=True,
                                      related_name='product')
-    owner = models.OneToOneField(Profile,
+    owner = models.ForeignKey(Profile,
                               on_delete=models.CASCADE,
                               default=None,
                               related_name='product')
@@ -46,6 +46,9 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('merchstore:merch-detail', args=[self.pk])
+
+    def get_update_url(self):
+        return reverse('merchstore:merch-update', args=[self.pk])
 
     class Meta:
         ordering = ['owner', 'name']
