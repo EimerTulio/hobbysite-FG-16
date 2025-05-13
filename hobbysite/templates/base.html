@@ -1,24 +1,52 @@
+{% load static %}
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content=width=device-width, initial-scale="1" />
-		<title>{% block title %} Title {% endblock %}</title>
-		{% block styles %}{% endblock %}
-	</head>
-	<body>
-		<header>
-			<nav>
-			<ul>
-				<li><a href="{% url 'homepage:index' %}">Home</a></li>
-				<li><a href="{% url 'merchstore:merch-list' %}">Merchstore</a></li>
-				<li><a href="{% url 'commissions:commission_list' %}">Commissions</a></li>
-				<li><a href="{% url 'wiki:article-list' %}">Wiki</a></li>
-				<li><a href="{% url 'blog:article_list' %}">Blog</a></li>
-				<li><a href="{% url 'forum:post-category' %}">Forum</a></li>
-			</ul>
-			</nav>
-			</header>
-		{% block content %}
-		{% endblock %}
-	</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet">
+    <title>{% block title %} Title {% endblock %}</title>
+    {% block styles %}{% endblock %}
+  </head>
+  <body class="">
+    <header>
+      <nav class="flex ml-40 mt-5 font-mono text-white gap-x-90">
+        <div class="flex items-center w-full"> <!-- New container div -->
+          <img src="/static/img/log.png" class="w-[150] h-[50] mr-10" alt="temp">
+          <div class="nav-items-container"> <!-- Wrapper for nav items -->
+            <ul class="flex flex-row gap-10 items-center uppercase font-audiowide text-sm">
+              <li class="nav"><a href="{% url 'homepage:index' %}">Home</a></li>
+              <li class="nav"><a href="{% url 'merchstore:merch-list' %}">Merchstore</a></li>
+              <li class="nav"><a href="{% url 'commissions:commission_list' %}">Commissions</a></li>
+              <li class="nav"><a href="{% url 'wiki:article-list' %}">Wiki</a></li>
+              <li class="nav"><a href="{% url 'blog:article_list' %}">Blog</a></li>
+              <li class="nav"><a href="{% url 'forum:post-category' %}">Forum</a></li>
+            </ul>
+          </div>
+          <!-- Profile Dropdown - Rightmost element -->
+          <div class="dropdown-container">
+            <button class="cursor-pointer font-audiowide uppercase bg-[#185d24] py-2 text-center text-sm rounded-[10px] outline-[#a5e7a4] outline-2 shadow-[#93c692] shadow-md hover:bg-[#85ff83] hover:text-[#1F1F1F] hover:outline-[#3d563d] hover:outline-[3px] w-48">
+              Profile
+            </button>
+            <ul class="dropdown-menu bg-white rounded-md shadow-lg z-50 text-sm text-gray-700">
+				{% if user.is_authenticated%}
+              <li><a href="{% url 'user_management:profile-update' username=user.username %}" class="block px-4 py-2 hover:bg-gray-100">View Profile</a></li>
+              <li class="block px-4 py-2 hover:bg-gray-100 text-red-600"><form method="post" action="{% url 'logout' %}">
+				{% csrf_token %}
+				<button type="submit">Logout</button>
+			  </form></li>
+			  {% else %}
+              <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a></li>
+			  <li><a href="{% url 'user_management:profile-register' %}" class="block px-4 py-2 hover:bg-gray-100">Register</a></li>
+			  {% endif %}
+            </ul>
+          </div>
+        </div>					
+      </nav>
+    </header>
+    {% block content %}
+    {% endblock %}
+    <footer class="flex justify-center items-center w-full h-10 bottom-0 fixed bg-[#0d3b15] text-[15px] text-center text-white/30 font-audiowide">
+      <p>Made by Alba, Eimer, LA, Matt, & Princess</p>
+    </footer>
+  </body>
 </html>
