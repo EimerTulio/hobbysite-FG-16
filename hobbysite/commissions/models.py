@@ -33,6 +33,9 @@ class Commission(models.Model):
     
     class Meta:
         ordering = ['-created_on']
+        
+    def get_author(self):
+        return self.author
 
     def get_absolute_url(self):
         return reverse('commissions:commissions-detail', args=[self.pk])

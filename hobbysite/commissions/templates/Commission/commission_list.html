@@ -42,6 +42,7 @@
         {% endif %}
     {% endif %}
 
+    {% if user.is_authenticated %}
     <h2>All Commissions</h2>
     {% if commissions %}
         <div class="commission-list-background">
@@ -58,6 +59,7 @@
         </div>
     {% else %}
         <p class="home-description">No commissions available.</p>
+    {% endif %}
     {% endif %}
 </div>
 

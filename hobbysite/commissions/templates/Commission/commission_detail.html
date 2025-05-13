@@ -17,11 +17,15 @@
                 <p><strong>Open Slots:</strong> {{ job.get_open_slots }}</p>
 
                 {% if job.get_open_slots > 0 %}
+                    {% if commission.get_author != request.user.profile %}
                     <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
                         {% csrf_token %}
                         <input type="hidden" name="job_id" value="{{ job.id }}">
                         <button type="submit" name="apply_job" class="apply-button">Apply to Job</button>
-                    </form>
+                    </form>    
+                    {% else %}
+                        <button disabled class="apply-button">Apply to Job</button>
+                    {% endif %}
                 {% else %}
                     <button disabled class="apply-button">Job Full</button>
                 {% endif %}
