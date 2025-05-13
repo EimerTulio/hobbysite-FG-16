@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Wiki</title>
-</head>
-<body>
-    <h1>Wiki Articles</h1> 
+{% extends 'base.html' %}
+{% block title %}
+    Wiki Articles
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-title-list">Wiki Articles</h1>
     <br>
-    {% for articles in object_list %}
+    {% for articles in articles %}
         <h2> {{articles.name}} </h2>
         <h5> {{articles.description}} </h5>
         {% for article in articles.articles.all %}
-            <a href="{% url 'wiki:article/detail' article.id %}">{{article.title}}</a>
+            <a href="{% url 'wiki:article-detail' article.id %}">{{article.title}}</a>
             <p> Created on : {{article.created_on}} </p>
             <p> Last Updated on : {{article.updated_on}} </p>
         {% endfor %}
         <br>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
