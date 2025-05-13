@@ -14,8 +14,8 @@ class ProductType(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = 'product type'
-        verbose_name_plural = 'product types'
+        verbose_name = 'Product type'
+        verbose_name_plural = 'Product types'
 
 class Product(models.Model):
     """A model representing a product"""
@@ -30,7 +30,7 @@ class Product(models.Model):
                               on_delete=models.CASCADE,
                               default=None,
                               related_name='product')
-    stock = models.IntegerField(default=1)
+    stock = models.PositiveBigIntegerField(default=1)
 
     STATUS_CHOICES = {
         "A": "Available",
@@ -52,8 +52,8 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['owner', 'name']
-        verbose_name = 'product'
-        verbose_name_plural = 'products'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
 
 class Transaction(models.Model):
     buyer = models.ForeignKey(Profile,
@@ -65,7 +65,7 @@ class Transaction(models.Model):
                                 on_delete=models.SET_NULL,
                                 null=True,
                                 related_name='transactions')
-    amount = models.IntegerField(default=1)
+    amount = models.PositiveIntegerField(default=1)
 
     STATUS_CHOICES = {
         "C": "On cart",
@@ -74,7 +74,7 @@ class Transaction(models.Model):
         "R": "To receive",
         "D": "Delivered",
     }
-    status = models.CharField(max_length=50,
+    status = models.CharField(max_length=1,
                               choices=STATUS_CHOICES,
                               default="C")
     created_on = models.DateTimeField(auto_now_add=True)

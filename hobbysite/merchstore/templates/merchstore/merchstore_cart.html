@@ -17,21 +17,21 @@
                 {% if transaction.buyer.id == user_id %}
                     <li class="post-categories">
                         <div>
-                            {{ transaction.product.owner.name }}
-                        </div>
-                        <div>
                             <a class="category-url" href="{{ transaction.product.get_absolute_url }}">
                                 {{ transaction.product.name }}
                             </a>
                         </div>
                         <div>
-                            {{ transaction.product.price }}
+                            Owner: {{ transaction.product.owner.name }}
                         </div>
                         <div>
-                            {{ transaction.amount }}
+                            Price: {{ transaction.product.price }}
                         </div>
                         <div>
-                            {{ transaction.get_status_display }}
+                            Amount: {{ transaction.amount }}
+                        </div>
+                        <div>
+                            Status: {{ transaction.get_status_display }}
                         </div>
                     </li>
                 {% endif %}

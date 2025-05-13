@@ -102,7 +102,7 @@ def merch_update(request, pk):
 @login_required
 def merch_cart(request):
     """A view that lists all products in the user's cart."""
-    transactions = Transaction.objects.all
+    transactions = Transaction.objects.all()
     user_id = request.user.id
     ctx = {
         "transactions" : transactions,
@@ -113,7 +113,7 @@ def merch_cart(request):
 @login_required
 def merch_transactions(request):
     """A view that lists all transactions made with the user's store."""
-    transactions = Transaction.objects.all
+    transactions = Transaction.objects.all()
     user_id = request.user.id
     ctx = {
         "transactions" : transactions,
