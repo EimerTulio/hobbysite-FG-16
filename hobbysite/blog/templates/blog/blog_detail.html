@@ -11,23 +11,15 @@
 <p>Created: {{ article.created_on }} | Updated: {{ article.updated_on }}</p>
 
 {% if user.profile == article.author %}
-    <a href="{% url 'article_update' article.id %}">Edit Article</a>
+    <a href="{% url 'blog:article_update' article.id %}">Edit Article</a>
 {% endif %}
 
 <h2>Related Articles</h2>
 <ul>
     {% for related in related_articles %}
-        <li><a href="{% url 'article_detail' related.id %}">{{ related.title }}</a></li>
+        <li><a href="{% url 'blog:article_detail' related.id %}">{{ related.title }}</a></li>
     {% endfor %}
 </ul>
-
-<h2>Comments</h2>
-{% for comment in comments %}
-    <div>
-        <p>{{ comment.entry }}</p>
-        <small>By {{ comment.author.name }} on {{ comment.created_on }}</small>
-    </div>
-{% endfor %}
 
 {% if user.is_authenticated %}
     <h3>Add Comment</h3>
@@ -38,5 +30,13 @@
     </form>
 {% endif %}
 
-<a href="{% url 'article_list' %}">Back to Articles</a>
+<h2>Comments</h2>
+{% for comment in comments %}
+    <div>
+        <p>{{ comment.entry }}</p>
+        <small>By {{ comment.author.name }} on {{ comment.created_on }}</small>
+    </div>
+{% endfor %}
+
+<a href="{% url 'blog:article_list' %}">Back to Articles</a>
 {% endblock %}
