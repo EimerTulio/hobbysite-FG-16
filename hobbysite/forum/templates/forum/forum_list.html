@@ -40,7 +40,7 @@
             
         
         {% else %}
-        My Threads:
+        My Threads: <br>
         {% for threads in user_threads.all %}
         
         <li><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
