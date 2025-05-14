@@ -101,7 +101,7 @@ def commission_create(request):
     else:
         form = CommissionForm()
 
-    return render(request, 'commission/commission_add.html', {'form': form})
+    return render(request, 'commission/commission_update.html', {'form': form})
     
 @login_required
 def commission_update(request, commission_id):
