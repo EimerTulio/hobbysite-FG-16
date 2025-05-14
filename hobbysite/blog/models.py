@@ -19,7 +19,7 @@ class Article (models.Model):
     author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(ArticleCategory, null=True, on_delete=models.SET_NULL)
     entry = models.TextField()
-    header_image = models.ImageField(upload_to='blog/headers/', null=True)
+    header_image = models.ImageField(upload_to='blog/headers/', null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add = True)
     updated_on = models.DateTimeField(auto_now= True)
 

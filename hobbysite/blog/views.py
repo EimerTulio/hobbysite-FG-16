@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
@@ -50,24 +50,34 @@ def blog_detail(request, article_id):
     }
     return render(request, 'blog/blog_detail.html', context)
 
-@method_decorator(login_required, name='dispatch')
-class ArticleCreateView(CreateView):
-    model = Article
-    form_class = ArticleForm
-    template_name = 'blog/article_form.html'
-    success_url = reverse_lazy('blog:article_list')
+@login_required
+def article_create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            article = form.save(commit=False)
+            article.author = profile
+            article.save()
+            return redirect('blog:article_list')
+    else:
+        form = ArticleForm()
     
-    def form_valid(self, form):
-        profile, created = Profile.objects.get_or_create(user=self.request.user)
-        form.instance.author = profile
-        return super().form_valid(form)
+    return render(request, 'blog/article_form.html', {'form': form})
 
-@method_decorator(login_required, name='dispatch')
-class ArticleUpdateView(UpdateView):
-    model = Article
-    form_class = ArticleForm
-    template_name = 'blog/article_form.html'
-    success_url = reverse_lazy('blog:article_list')
+@login_required
+def article_update(request, pk):
+    article = get_object_or_404(Article, pk=pk)
 
-    def get_queryset(self):
-        return super().get_queryset().filter(author__user=self.request.user)
+    if article.author.user != request.user:
+        return redirect('blog:article_list')
+    
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, request.FILES, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:article_list')
+    else:
+        form = ArticleForm(instance=article)
+    
+    return render(request, 'blog/article_form.html', {'form': form})
