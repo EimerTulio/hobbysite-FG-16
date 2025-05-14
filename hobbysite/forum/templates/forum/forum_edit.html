@@ -9,9 +9,17 @@ Thread Edit
 {% endblock %}
 
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" class="forms mt-16 h-[500px] mx-auto">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
+    <h1 class="form-text">UPDATE THREAD</h1>
+    <label for="title" class="">Title</label>
+    {{form.title}}
+    <label for="category" class="">Category</label>
+    {{form.category}}
+    <label for="entry" class="">Entry</label>
+    <textarea name="entry" rows="10" cols="50"></textarea>
+    <label for="image" class="">Image</label>
+    {{form.image}}
+    <input type="submit" value="SAVE CHANGES"></input>
 </form>
 {% endblock %}

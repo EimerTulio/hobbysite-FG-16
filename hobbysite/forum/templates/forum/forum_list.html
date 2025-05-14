@@ -13,7 +13,7 @@
         <div class="app-container">
             <ul class="">
                 {% for category in categories %}
-                    <li class="">
+                    <li class="list">
                         <div>
                             <p class="">
                                 <p class="app-heading">
@@ -32,26 +32,28 @@
         {% else %}
         <div class="app-container">
         <div>
-        <p class="app-heading">My Threads</p>
+        <p class="user-threads">My Threads</p>
         {% for threads in user_threads.all %}
         
-        <li><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
+        <li class="list"><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
         {% endfor %}
+        <p class="user-threads">All Threads</p>
         {% for cat in other_categories %}
         <p class="app-heading">{{cat}}</p>
             {% for thread in other_threads %}
             {% if thread.category == cat %}
-            <li><a href="{{ thread.get_absolute_url }}">{{thread}}</a></li>
+            <li class="list"><a href="{{ thread.get_absolute_url }}">{{thread}}</a></li>
             {% endif %}
             {% endfor %}
         {% endfor %}
         {% endif %}
     </ul>
-    </div>
-    </div>
-    </div>
-    </div>
     <div class="w-full flex justify-center mt-5">
-    <a class="create-button" href="{% url 'forum:thread-add' %}">Create Thread</a>
+        <a class="create-button" href="{% url 'forum:thread-add' %}">Create Thread</a>
+        </div>
     </div>
+    </div>
+    </div>
+    </div>
+    
 {% endblock %}

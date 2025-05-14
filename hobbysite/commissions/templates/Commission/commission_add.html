@@ -3,13 +3,23 @@
 {% block title %}Update Commission{% endblock %}
 
 {% block content %}
-    <h1>Create Commission</h1>
-
-    <form method="post">
+<div class="h-[500px] flex items-center justify-center mt-20">
+    <form method="POST" enctype="multipart/form-data" class="forms h-[500px]">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Commission</button>
+        <h1 class="form-text">CREATE COMMISSION</h1>
+        <label for="title" class="">Title</label>
+        {{form.title}}
+        <label for="description" class="">Description</label>
+        {{form.description}}
+        <label for="people_required" class="">People Required</label>
+        {{form.people_required}}
+        <label for="status" class="">Status</label>
+        {{form.status}}
+        <input type="submit" value="ADD COMMISSION"></input>
+        <a href="{% url 'commissions:commission_list' %}" class="back-button">BACK</a>
     </form>
+    
+    </div>
 
-    <a href="{% url 'commissions:commission_list' %}" class="back-link">Back to Commission List</a>
+    
 {% endblock %}

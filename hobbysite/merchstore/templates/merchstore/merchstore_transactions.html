@@ -5,41 +5,34 @@
 {% endblock %}
 
 {% block content %}
-    <div class="main-container"> 
-        {% url 'merchstore:merch-create' as merch_create %}
-        {% url 'merchstore:merch-cart' as merch_cart %}
-        <a href="{{ merch_create }}">Create a Product</a>
-        <a href="{{ merch_cart }}">Cart</a>
-        <div>
-            <ul class="post-categories-head">
-                <li class="post-categories featured">Your Transactions</li>
-                {% for transaction in transactions %}
+    <div class="app-container flex-col text-white font-mono">
+        <ul class="space-y-6">
+            <li class="user-threads">Your Transactions</li>
+            {% for transaction in transactions %}
                 {% if transaction.product.owner.user.id == user_id %}
-                    <li class="post-categories">
-                        <div>
-                           Buyer: {{ transaction.buyer.name }}
-                        </div>
-                        <div>
-                            <a class="category-url" href="{{ transaction.product.get_absolute_url }}">
+                    <li class="border p-4 rounded-lg bg-gray-800 shadow-md">
+                        <div>Buyer: <span class="text-emerald-400">{{ transaction.buyer.name }}</span></div>
+                        <div class="mb-2">
+                            <a class="text-emerald-300 text-lg underline hover:text-emerald-200" href="{{ transaction.product.get_absolute_url }}">
                                 {{ transaction.product.name }}
                             </a>
                         </div>
-                        <div>
-                            Price: {{ transaction.product.price }}
-                        </div>
-                        <div>
-                            Amount: {{ transaction.amount }}
-                        </div>
-                        <div>
-                            Status: {{ transaction.get_status_display }}
-                        </div>
-                        <div>
-                            Transaction started on: {{ transaction.created_on }}
-                        </div>
+                        <div>Price: <span class="text-emerald-400">{{ transaction.product.price }}</span></div>
+                        <div>Amount: <span class="text-emerald-400">{{ transaction.amount }}</span></div>
+                        <div>Status: <span class="text-emerald-400">{{ transaction.get_status_display }}</span></div>
+                        <div>Transaction started on: <span class="text-emerald-400">{{ transaction.created_on }}</span></div>
                     </li>
                 {% endif %}
-                {% endfor %}
-            </ul>
+            {% empty %}
+                <li class="text-gray-400 italic">You don't have any transactions yet.</li>
+            {% endfor %}
+        </ul>
+        <div class="flex gap-4 justify-center my-10">
+            {% url 'merchstore:merch-create' as merch_create %}
+            {% url 'merchstore:merch-cart' as merch_cart %}
+            <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+            <a href="{{ merch_cart }}" class="create-button">Cart</a>
         </div>
+
     </div>
 {% endblock %}

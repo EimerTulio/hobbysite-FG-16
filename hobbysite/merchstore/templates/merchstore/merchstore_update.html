@@ -12,11 +12,30 @@
         <a href="{{ merch_create }}">Create a Product</a>
         <a href="{{ merch_cart }}">Cart</a>
         <a href="{{ merch_transactions }}">Your Orders</a>
-        <div>
-            <form method="post">
+        <div class="h-[600px] flex items-center justify-center mt-20 mb-20">
+            <form method="POST" enctype="multipart/form-data" class="forms h-[650px] text-white font-mono space-y-4">
                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Update">
+                <h1 class="form-text text-xl font-bold mb-4">CREATE PRODUCT</h1>
+        
+                <label for="name" class="">Name</label>
+                {{ form.name }}
+        
+                <label for="description" class="">Description</label>
+                {{ form.description }}
+        
+                <label for="price" class="">Price</label>
+                {{ form.price }}
+        
+                <label for="product_type" class="">Product Type</label>
+                {{ form.product_type }}
+        
+                <label for="stock" class="">Stock</label>
+                {{ form.stock }}
+        
+                <label for="status" class="">Status</label>
+                {{ form.status }}
+        
+                <input type="submit" value="UPDATE PRODUCT"/>
             </form>
         </div>
     </div>

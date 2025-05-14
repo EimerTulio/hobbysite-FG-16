@@ -1,21 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %} 
-    Add Product | Merchstore
+{% block title %}
+Add Product
 {% endblock %}
 
 {% block content %}
-    <div class="main-container"> 
-        {% url 'merchstore:merch-cart' as merch_cart %}
-        {% url 'merchstore:merch-transactions' as merch_transactions %}
-        <a href="{{ merch_cart }}">Cart</a>
-        <a href="{{ merch_transactions }}">Your Orders</a>
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Create">
-            </form>
-        </div>
-    </div>
+<div class="h-[600px] flex items-center justify-center mt-20 mb-20">
+    <form method="POST" enctype="multipart/form-data" class="forms h-[650px] text-white font-mono space-y-4">
+        {% csrf_token %}
+        <h1 class="form-text text-xl font-bold mb-4">CREATE PRODUCT</h1>
+
+        <label for="name" class="">Name</label>
+        {{ form.name }}
+
+        <label for="description" class="">Description</label>
+        {{ form.description }}
+
+        <label for="price" class="">Price</label>
+        {{ form.price }}
+
+        <label for="product_type" class="">Product Type</label>
+        {{ form.product_type }}
+
+        <label for="stock" class="">Stock</label>
+        {{ form.stock }}
+
+        <label for="status" class="">Status</label>
+        {{ form.status }}
+
+        <input type="submit" value="CREATE PRODUCT"/>
+    </form>
+</div>
 {% endblock %}
