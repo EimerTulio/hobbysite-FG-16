@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+    {% block title %}
+        Add Article
+    {% endblock %}
+
+    {% block content %}
+        <h1>Add Article</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Add Article</button>
+        </form>
+
+        <a href="{% url 'wiki:article-list' %}">Back</a>
+{% endblock %}
