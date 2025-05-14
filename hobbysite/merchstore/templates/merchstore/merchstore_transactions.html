@@ -24,12 +24,14 @@
                     </li>
                 {% endif %}
             {% empty %}
-                <li class="text-gray-400 italic">You don't have any transactions yet.</li>
+                <li class="text-white italic">You don't have any transactions yet.</li>
             {% endfor %}
         </ul>
         <div class="flex gap-4 justify-center my-10">
             {% url 'merchstore:merch-create' as merch_create %}
             {% url 'merchstore:merch-cart' as merch_cart %}
+            {% url 'merchstore:merch-list' as merch_list %}
+            <a href="{{ merch_list }}" class="create-button">Merch List</a>
             <a href="{{ merch_create }}" class="create-button">Create a Product</a>
             <a href="{{ merch_cart }}" class="create-button">Cart</a>
         </div>

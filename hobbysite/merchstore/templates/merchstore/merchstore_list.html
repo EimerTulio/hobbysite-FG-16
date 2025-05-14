@@ -35,7 +35,7 @@
             {% for product in merch %}
                 {% if not product.owner.user.id == user_id %}
                 <li class="post-entry">
-                    <a class="category-url hover:text-emerald-400" href="{{ product.get_absolute_url }}">
+                    <a class="category-url hover:text-emerald-400 font-mono text-[14px]" href="{{ product.get_absolute_url }}">
                         {{ product.name }}
                     </a>
                 </li>

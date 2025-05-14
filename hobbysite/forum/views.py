@@ -10,9 +10,9 @@ def list_view(request):
         other_threads= Thread.objects.exclude(author=current_user)
         other_categories = ThreadCategory.objects.filter(post_category__in=other_threads).distinct()
     else:
-        user_threads = {}
-        other_threads = {}
-        other_categories = {}
+        user_threads = Thread.objects.none()
+        other_threads = Thread.objects.none()
+        other_categories = ThreadCategory.objects.none()
     categories = ThreadCategory.objects.all()
     context = {
         "user_threads": user_threads,
@@ -29,7 +29,9 @@ def detail_view(request, pk):
     threads = get_object_or_404(Thread, pk=pk)
     related_threads = Thread.objects.filter(category=threads.category).exclude(pk=threads.pk)
     profile= None
-    comments = Comment.objects.filter(thread = threads)
+    comments = Comment.objects.none()
+    if comments.exists(): 
+        comments = Comment.objects.filter(thread = threads)
     if request.user.is_authenticated:
         profile = request.user.profile
     if request.method == "POST":
