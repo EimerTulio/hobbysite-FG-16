@@ -26,7 +26,7 @@ class Commission(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.title
     
     def status_order(self):
@@ -46,6 +46,11 @@ class Commission(models.Model):
 
     def total_open_manpower(self):
         return sum(job.manpower_required - job.accepted_applications() for job in self.jobs.all())
+    
+    def update_status_if_full(self):
+        if all(job.status == Job.CLOSED for job in self.jobs.all()):
+            self.status = 'Full'
+            self.save()
 
 class Job(models.Model):
     OPEN = 'Open'
@@ -67,6 +72,15 @@ class Job(models.Model):
 
     def __str__(self):
         return self.role
+    
+    def accepted_applications(self):
+        return self.applications.filter(status='Accepted').count()
+    
+    def update_status(self):
+        if self.get_open_slots() <= 0:
+            self.status = self.CLOSED
+            self.save()
+            self.applications.filter(status='Pending').delete()
     
 class JobApplication(models.Model):
     STATUS_CHOICES = [

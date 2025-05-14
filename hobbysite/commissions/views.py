@@ -41,8 +41,9 @@ def commission_detail(request, commission_id):
         if 'apply_job' in request.POST:
             job_id = request.POST.get('job_id')
             job = get_object_or_404(Job, id=job_id)
+            existing = JobApplication.objects.filter(applicant=request.user.profile, job=job).exists()
 
-            if job.get_open_slots() > 0:
+            if job.get_open_slots() > 0 and not existing:
                 JobApplication.objects.create(
                     applicant=request.user.profile,
                     job=job,
@@ -58,6 +59,17 @@ def commission_detail(request, commission_id):
                 if application.job.get_open_slots() > 0:
                     application.status = 'Accepted'
                     application.save()
+
+                    job = application.job
+                    if job.get_open_slots() <= 0:
+                        job.status = Job.CLOSED
+                        job.save()
+                        job.applications.filter(status='Pending').delete()
+
+                    commission = job.commission
+                    if all(j.status == Job.CLOSED for j in commission.jobs.all()):
+                        commission.status = 'Full'
+                        commission.save()
 
             elif 'reject_application' in request.POST:
                 application.status = 'Rejected'

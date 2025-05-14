@@ -24,7 +24,7 @@ class JobApplicationForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        instance.status = 'Accepted'  # Set status to "Accepted" on submission
+        instance.status = 'Accepted'
         if commit:
             instance.save()
         return instance
