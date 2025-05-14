@@ -1,8 +1,10 @@
 from django.db import models
 from django.urls import reverse
+
 from user_management.models import Profile
 
 # Create your models here.
+
 
 class ProductType(models.Model):
     """A model representing a product type or category."""
@@ -16,6 +18,7 @@ class ProductType(models.Model):
         ordering = ['name']
         verbose_name = 'Product type'
         verbose_name_plural = 'Product types'
+
 
 class Product(models.Model):
     """A model representing a product"""
@@ -45,9 +48,11 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
+        """Returns the url for the details page of this product."""
         return reverse('merchstore:merch-detail', args=[self.pk])
 
     def get_update_url(self):
+        """Returns the url for the update page of this product."""
         return reverse('merchstore:merch-update', args=[self.pk])
 
     class Meta:
@@ -55,12 +60,14 @@ class Product(models.Model):
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
 
+
 class Transaction(models.Model):
+    """A model representing a transaction of a buyer ordering a product."""
     buyer = models.ForeignKey(Profile,
-                                 on_delete=models.SET_NULL,
-                                 null=True,
-                                 default=None,
-                                 related_name='transactions')
+                              on_delete=models.SET_NULL,
+                              null=True,
+                              default=None,
+                              related_name='transactions')
     product = models.ForeignKey(Product,
                                 on_delete=models.SET_NULL,
                                 null=True,
@@ -80,4 +87,4 @@ class Transaction(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.buyer.name + " " + self.product.name + "x" + str(self.amount) + " on " + str(self.created_on)
+        return self.buyer.name + " " + self.product.name + "x" + str(self.amount)

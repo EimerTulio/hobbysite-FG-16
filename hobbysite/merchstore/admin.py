@@ -8,6 +8,7 @@ class ProductInline(admin.TabularInline):
     model = Product
     extra = 0
 
+
 class ProductAdmin(admin.ModelAdmin):
     """Lists all products and their contents."""
     model = Product
@@ -16,18 +17,17 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['product_type', ]
     list_editable = ['price', 'product_type', 'stock', 'status']
     ordering = ['name', 'product_type', 'price',]
-
     search_fields = ['name',]
-
     autocomplete_fields = ['product_type',]
+
 
 class ProductTypeAdmin(admin.ModelAdmin):
     """Lists all product types and products categorized as that type."""
     model = ProductType
     inlines = [ProductInline,]
     ordering = ['name',]
-
     search_fields = ['name',]
+
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductType, ProductTypeAdmin)
