@@ -8,15 +8,77 @@
 {% block content %} 
     <h1>Title: {{ article.title }}</h1> 
 
-    <h5> {{ article.category }} 
+    <h5> {{ article.category }} <br>
 
+    {% if article.author %} 
+        <b> Created by: {{ article.author }} </b>
+    {% else %}
+        <b> Created by: Anonymous </b>
+    {% endif %}
     <br> Created on {{ article.created_on }} 
-
     <br> Last Updated on {{ article.updated_on }} </h5> 
 
-    <br> {{ article.entry }} 
+    {% if request.user == article.author.user %}
+        <a href="{% url 'wiki:article-update' article.pk %}">Edit this article</a>
+    {% endif %}
 
-    <br> 
+    <h3> Header </h3>
+    {% if article.header_image %} 
+        <img src="{{ article.header_image.url }}" alt="Image" style="width: 500px; height: 500px;">
+    {% else %}
+        <h5> No header image uploaded </h5>
+    {% endif %}  
+
+    <h3> Article Content </h3>
+    {{ article.entry }} <br>
+
+    <h3> Article Picture Gallery </h3>
+    {% if article.images.all %}
+        {% for picture in article.images.all %}
+            <img src="{{ picture.image.url }}" alt="Image" style="width: 500px; height: 200px;">
+        {% endfor %}
+    {% else %}
+        <h5> No pictures uploaded </h5>
+    {% endif %}
+    
+    <h3> Read more about <i>{{ category.name }}</i></h3>
+    {% if related_articles %}
+        {% for articles in related_articles %}
+            {% if articles != article %}
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'wiki:article-detail' articles.id %}">{{ articles.title }}</a></li>
+                {% else %}
+                    {% if not articles.author %}
+                        <li><a href="{% url 'wiki:article-detail' articles.id %}">{{ articles.title }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h5> No related articles available </h5>
+    {% endif %}
+    <br>
+    
+
+    <h3> Comments </h3>
+    {% if request.user.is_authenticated %}
+        {% if article.comment_article.all %}
+            {% for comment in article.comment_article.all %}
+                <h5> {{ comment.entry }} </h5>
+                <p> Commented by: {{ comment.author }} </p>
+                <p> Commented on: {{ comment.created_on }} </p>
+            {% endfor %}
+        {% else %}
+            <h5> No comments available, be the first one to comment! </h5>
+        {% endif %}
+        <form method="post">
+        {% csrf_token %}
+            {{ form.as_p }}  
+            <button type="submit">Post Comment</button>
+        </form>
+    {% else %}
+        <h5> You need to be logged in to comment </h5>
+    {% endif %}
 
     <a href="{% url 'wiki:article-list' %}">Back</a> 
 {% endblock %}
