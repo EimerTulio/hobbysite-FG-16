@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Thread Edit
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+{% endblock %}

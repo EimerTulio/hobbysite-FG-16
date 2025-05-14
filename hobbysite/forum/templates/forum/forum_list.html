@@ -18,7 +18,7 @@
                 </p>
             </div>
         </div>
-
+        {% if not user.is_authenticated %}
         <div>
             <ul class="post-categories-head">
                 <li class="post-categories featured">Featured Content</li>
@@ -26,17 +26,36 @@
                     <li class="post-categories">
                         <div>
                             <p class="category-title">
-                                <a class="category-url" href="{{ category.get_absolute_url }}">
+                                <p>
                                     {{ category }}
-                                </a>
+                                </p>
                             </p>
                             {% for post in category.post_category.all %}
-                                <p class="post-title">{{ post.title }}</p>
+                                <a href="{{post.get_absolute_url}}">{{ post.title }}</p>
                             {% endfor %}
                         </div>
                     </li>
                 {% endfor %}
-            </ul>
-        </div>
+            
+            
+        
+        {% else %}
+        My Threads:
+        {% for threads in user_threads.all %}
+        
+        <li><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
+        {% endfor %}
+        {% for cat in other_categories %}
+        {{cat}}
+            {% for thread in other_threads %}
+            {% if thread.category == cat %}
+            <li><a href="{{ thread.get_absolute_url }}">{{thread}}</a></li>
+            {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {% endif %}
+        <a href="{% url 'forum:thread-add' %}">Create Thread</a>
+    </ul>
+    </div>
     </div>
 {% endblock %}

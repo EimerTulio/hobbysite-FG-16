@@ -6,10 +6,18 @@
 
 {% block content %}
     <div class="main-container"> 
+        {% url 'merchstore:merch-create' as merch_create %}
+        {% url 'merchstore:merch-cart' as merch_cart %}
+        {% url 'merchstore:merch-transactions' as merch_transactions %}
+        <a href="{{ merch_create }}">Create a Product</a>
+        <a href="{{ merch_cart }}">Cart</a>
+        <a href="{{ merch_transactions }}">Your Orders</a>
         <div>
             <ul class="post-categories-head">
-                <li class="post-categories featured">Merch List</li>
+                <li class="post-categories featured">Your Products</li>
+                {% if user.is_authenticated %}
                 {% for product in merch %}
+                    {% if product.owner.user.id == user_id %}
                     <li class="post-categories">
                         <div>
                             <p class="category-title">
@@ -19,6 +27,22 @@
                             </p>
                         </div>
                     </li>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                <li class="post-categories featured">All Products</li>
+                {% for product in merch %}
+                    {% if not product.owner.user.id == user_id %}
+                    <li class="post-categories">
+                        <div>
+                            <p class="category-title">
+                                <a class="category-url" href="{{ product.get_absolute_url }}">
+                                    {{ product.name }}
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
