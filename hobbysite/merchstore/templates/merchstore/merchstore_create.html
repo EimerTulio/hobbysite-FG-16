@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Add Product | Merchstore
+{% endblock %}
+
+{% block content %}
+    <div class="main-container"> 
+        {% url 'merchstore:merch-cart' as merch_cart %}
+        {% url 'merchstore:merch-transactions' as merch_transactions %}
+        <a href="{{ merch_cart }}">Cart</a>
+        <a href="{{ merch_transactions }}">Your Orders</a>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Create">
+            </form>
+        </div>
+    </div>
+{% endblock %}
