@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('homepage.urls', namespace='homepage')),
-    path('accounts/', include('user_management.urls', namespace='profile')),
+    path('profile/', include('user_management.urls', namespace='profile')),
+    path("accounts/", include("django.contrib.auth.urls")),
     path('wiki/', include('wiki.urls', namespace='wiki')),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls', namespace='blog')),
@@ -27,3 +30,5 @@ urlpatterns = [
     path('merchstore/', include('merchstore.urls', namespace='merchstore')),
     path('forum/', include('forum.urls', namespace='forum')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

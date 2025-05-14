@@ -2,18 +2,20 @@ from django.db import models
 from django.urls import reverse
 
 class ArticleCategory(models.Model):
+    '''ArticleCategory model for wiki articles'''
     name = models.CharField(max_length=255)
     description = models.TextField()
     def __str__(self):
         return '{}: ArticleCategory'.format(self.name)
     
     def get_absolute_url(self):
-        return reverse('wiki:article/detail', args=[self.pk])
+        return reverse('wiki:article-detail', args=[self.pk])
     
     class Meta:
         ordering = ['name']
     
 class Article(models.Model):
+    '''Article model for wiki articles'''
     title = models.CharField(max_length=255)
     category = models.ForeignKey(
         ArticleCategory,

@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ article.title }}</h1>
 {% if article.header_image %}
-    <img src="{{ article.header_image.url }}" alt="{{ article.title }}" style="max-width: 100%;">
+    <img src="{{ article.header_image.url }}" alt="{{ article.title }}" style="width:200px; height:200px;">
 {% endif %}
 <p>By {{ article.author.name }}</p>
 <p>Category: {{ article.category }}</p>
