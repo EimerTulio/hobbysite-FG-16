@@ -17,7 +17,7 @@
                         <a class="commission-link" href="{% url 'commissions:commission_detail' commission.id %}">
                             {{ commission.title }}
                         </a>
-                        <span class="people-required">({{ commission.total_manpower }} people required)</span>
+                        <span class="people-required">({{ commission.people_required }} people required)</span>
                     </li>
                 {% endfor %}
             </ul>
@@ -33,7 +33,7 @@
                         <a class="commission-link" href="{% url 'commissions:commission_detail' commission.id %}">
                             {{ commission.title }}
                         </a>
-                        <span class="people-required">({{ commission.total_manpower }} people required)</span>
+                        <span class="people-required">({{ commission.people_required }} people required)</span>
                     </li>
                 {% endfor %}
             </ul>
@@ -52,7 +52,7 @@
                         <a class="commission-link" href="{% url 'commissions:commission_detail' commission.id %}">
                             {{ commission.title }}
                         </a>
-                        <span class="people-required">({{ commission.total_manpower }} people required)</span>
+                        <span class="people-required">({{ commission.people_required }} people required)</span>
                     </li>
                 {% endfor %}
             </ul>
