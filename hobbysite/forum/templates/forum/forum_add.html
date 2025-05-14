@@ -8,9 +8,19 @@ Add Threads
 {% endblock %}
 
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
+<div class="h-[500px] flex items-center justify-center mt-20">
+<form method="POST" enctype="multipart/form-data" class="forms h-[500px]">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Thread</button>
+    <h1 class="form-text">CREATE THREAD</h1>
+    <label for="title" class="">Title</label>
+    {{form.title}}
+    <label for="category" class="">Category</label>
+    {{form.category}}
+    <label for="entry" class="">Entry</label>
+    {{form.entry}}
+    <label for="image" class="">Image</label>
+    {{form.image}}
+    <input type="submit" value="CREATE THREAD"></input>
 </form>
+</div>
 {% endblock %}

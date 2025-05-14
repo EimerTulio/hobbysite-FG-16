@@ -8,6 +8,10 @@
     font-family: 'Audiowide';
     src: url('/static/fonts/Audiowide-Regular.ttf');
 }
+@font-face {
+    font-family: 'Wadik';
+    src: url('/static/fonts/Wadik.otf');
+}
 @layer base {
     body {
         @apply bg-linear-to-b from-[#1f1f1f] via-[#252525] via-[#334d36] via-[#4d7551] to-[#33542c]
@@ -32,6 +36,23 @@
     .main-title {
         @apply text-[200px] font-ressa text-[#a5e7a4] text-shadow-lg text-shadow-lime-300/30
     }
+
+    .app-container {
+        @apply flex items-center justify-center p-10 bg-gradient-to-br from-[#365c15] via-emerald-400 to-emerald-600 rounded-xl shadow-xl outline-2 outline-emerald-200/50 w-[75%] rounded-2xl mt-5 mx-auto
+    }
+    .app-title {
+        @apply text-[72px] text-[#a5e7a4] font-audiowide uppercase text-center mt-20
+    }
+    .app-subtitle {
+        @apply text-[16px] text-white font-mono uppercase mb-20
+    }
+    .app-heading {
+        @apply text-[24px] font-audiowide uppercase text-center
+    }
+    .create-button {
+        @apply uppercase text-white font-audiowide bg-emerald-700 outline-2 outline-emerald-900 w-48 p-2 text-center rounded-[10px] hover:bg-emerald-200 hover:text-emerald-900
+    }
+
     .forms {
         @apply mt-32 flex flex-col w-[50%] p-5 bg-gradient-to-br from-[#365c15] via-emerald-400 to-emerald-600 rounded-xl shadow-xl outline-2 outline-emerald-200/50;
     }
@@ -51,6 +72,7 @@
 @theme {
     --font-ressa: 'Ressa', sans-serif;
     --font-audiowide: 'Audiowide', sans-serif;
+    --font-wadik: 'Wadik', sans-serif;
     --width-profile: 9rem;
 }
 /* Custom CSS to prevent layout shifts */
