@@ -97,11 +97,22 @@ if DEVELOPMENT_MODE is True:
             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if os.getenv("DATABASE_URL", None) is None:
-        raise Exception("DATABASE_URL environment variable not defined")
+elif len(sys.argv) > 0 and sys.argv[1] not in ['collectstatic', 'makemigrations', 'migrate']:
+    database_url = os.getenv("DATABASE_URL")
+    if not database_url:
+        print("Warning: DATABASE_URL not defined. Skipping DB setup during build.")
+        DATABASES = {}
+    else:
+        DATABASES = {
+            "default": dj_database_url.parse(database_url),
+        }
+else:
+    # Fallback (you can use sqlite or skip setup)
     DATABASES = {
-        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
     }
 
 
