@@ -12,6 +12,7 @@ class TransactionForm(forms.ModelForm):
     product = Product()
 
     def set_product(self, transaction_product):
+        """Sets the product the TransactionForm is for."""
         self.product = transaction_product
 
     def clean(self):

@@ -11,6 +11,16 @@
 </span>
 <div class="app-container flex-col">
     <div class="font-mono text-white space-y-4">
+        <div class="gap-4 justify-center mt-10">
+            {% url 'merchstore:merch-create' as merch_create %}
+            {% url 'merchstore:merch-cart' as merch_cart %}
+            {% url 'merchstore:merch-transactions' as merch_transactions %}
+            {% url 'merchstore:merch-list' as merch_list %}
+            <a href="{{ merch_list }}" class="create-button">Merch List</a>
+            <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+            <a href="{{ merch_cart }}" class="create-button">Cart</a>
+            <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
+        </div>
         <h2 class="user-threads">Product Details</h2>
         
         <div class="space-y-2">
@@ -22,7 +32,7 @@
             <p><strong class="text-emerald-800">In stock:</strong> {{ product.stock }}</p>
             
             {% if product.owner.user.id == user_id %}
-                <a href="{{ product.get_update_url }}" class="back-button">Edit Product</a>
+                <a href="{{ product.get_update_url }}" class="comment-button mt-4">Edit Product</a>
             {% endif %}
         </div>
 
@@ -51,16 +61,6 @@
             </form>
         </div>
         {% endif %}
-    </div>
-    <div class="flex gap-4 justify-center mt-10">
-        {% url 'merchstore:merch-create' as merch_create %}
-        {% url 'merchstore:merch-cart' as merch_cart %}
-        {% url 'merchstore:merch-transactions' as merch_transactions %}
-        {% url 'merchstore:merch-list' as merch_list %}
-        <a href="{{ merch_list }}" class="create-button">Merch List</a>
-        <a href="{{ merch_create }}" class="create-button">Create a Product</a>
-        <a href="{{ merch_cart }}" class="create-button">Cart</a>
-        <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
     </div>
 </div>
 {% endblock %}

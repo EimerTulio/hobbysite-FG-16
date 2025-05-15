@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import merch_list, merch_details, merch_create, merch_update, merch_cart, merch_transactions
+from .views import (merch_list, merch_details, merch_create,
+                    merch_update, merch_cart, merch_transactions)
 
 urlpatterns = [
     path('items', merch_list, name='merch-list'),

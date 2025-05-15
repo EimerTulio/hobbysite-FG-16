@@ -9,7 +9,7 @@ Thread Edit
 {% endblock %}
 
 {% block content %}
-<form method="POST" enctype="multipart/form-data" class="forms mt-16 h-[500px] mx-auto">
+<form method="POST" enctype="multipart/form-data" class="forms mt-16 flex-col mx-auto">
     {% csrf_token %}
     <a class="back-button" href="{% url 'forum:post-category' %}">Go Back</a>
     <h1 class="form-text">UPDATE THREAD</h1>
@@ -18,7 +18,7 @@ Thread Edit
     <label for="category" class="">Category</label>
     {{form.category}}
     <label for="entry" class="">Entry</label>
-    <textarea name="entry" rows="10" cols="50"></textarea>
+    {{form.entry}}
     <label for="image" class="">Image</label>
     {{form.image}}
     <input type="submit" value="SAVE CHANGES"></input>
