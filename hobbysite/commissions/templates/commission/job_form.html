@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Create Job{% endblock %}
+
+{% block content %}
+<div class="h-[500px] flex items-center justify-center mt-20">
+    <form method="POST" enctype="multipart/form-data" class="forms h-[500px]">
+        {% csrf_token %}
+        <h1 class="form-text">CREATE JOB FOR {{commission.title}}</h1>
+        <label for="role" class="">Role</label>
+        {{form.role}}
+        <label for="manpower_required" class="">Manpower Required</label>
+        {{form.manpower_required}}
+        <label for="status" class="">Status</label>
+        {{form.status}}
+        <input type="submit" value="CREATE JOB"></input>
+        <a href="{% url 'commissions:commission_list' %}" class="back-button">BACK</a>
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Commission Details{% endblock %}
+
+{% block content %}
+<span class="flex flex-col justify-center items-center">
+    <h1 class="app-title">{{ commission.title }}</h1>
+    <p class="app-subtitle text-center">{{ commission.description }}</p>
+</span>
+<div class="app-container">
+    <div>
+    <div class="font-mono">
+        <h2 class="user-threads">Jobs for this Commission</h2>
+        {% for job in jobs %}
+            <div class="job">
+                <p><strong>Role:</strong> {{ job.role }}</p>
+                <p><strong>Status:</strong> {{ job.status }}</p>
+                <p><strong>Manpower Required:</strong> {{ job.manpower_required }}</p>
+                <p><strong>Open Slots:</strong> {{ job.get_open_slots }}</p>
+
+                {% if job.get_open_slots > 0 %}
+                    {% if commission.get_author != request.user.profile %}
+                    <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="job_id" value="{{ job.id }}">
+                        <button type="submit" name="apply_job" class="create-button">Apply to Job</button>
+                    </form>    
+    {% endif %}
+{% else %}
+    <button disabled class="commission-btn uppercase bg-gray-400 cursor-not-allowed text-white font-audiowide p-1 rounded-md my-5">
+        Job Full
+    </button>
+{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if is_owner %}
+    <h2 class="user-threads">Pending Applications</h2>
+    {% for application in applications %}
+        {% if application.status == "Pending" %}
+            <div>
+                <p><strong>{{ application.applicant.user.username }}</strong> applied for <strong>{{ application.job.role }}</strong></p>
+                <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="application_id" value="{{ application.id }}">
+                    <button type="submit" name="accept_application" class="create-button">Accept</button>
+                    <button type="submit" name="reject_application" class="create-button">Reject</button>
+                </form>
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>No pending applications.</p>
+    {% endfor %}
+    {% endif %}
+
+    <h2 class="user-threads">Comments</h2>
+    {% for comment in comments %}
+        <p>{{ comment.user }}: {{ comment.content }}</p>
+    {% endfor %}
+
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'commissions:commission_list' %}" class="back-button">Go Back</a>
+        {% if commission.author == user.profile %}
+            <a href="{% url 'commissions:job_form' commission.id %}" class="back-button">Create Job</a>
+        {% endif %}
+        {% if is_owner %}
+        <a href="{% url 'commissions:commission_update' commission.id %}" class="back-button">Edit Commission</a>
+    {% endif %}
+    </div>
+    </div>
+</div>
+{% endblock %}
