@@ -105,7 +105,6 @@ def update_view(request, pk):
         if form.is_valid():
             form.save()
             return redirect("forum:post", pk=thread.pk)
-
     context = {
         "form": form,
         "thread": thread,

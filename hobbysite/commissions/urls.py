@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import commission_list, commission_detail, commission_create, commission_update, job_application, job_create
+from .views import commission_list, commission_detail, commission_create, commission_update, job_application, job_create, job_update
 
 urlpatterns = [
     path('list/', commission_list, name = 'commission_list'),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('<int:commission_id>/edit/', commission_update, name='commission_edit'),
     path('<int:commission_id>/jobs/<int:job_id>/apply/', job_application, name='job_application_form'),
     path('<int:commission_id>/jobs/create/', job_create, name='job_form'),
+    path('<int:commission_id>/jobs/update/', job_update, name='job_update'),
 
 ]
 
