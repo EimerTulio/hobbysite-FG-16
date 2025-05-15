@@ -38,9 +38,8 @@
         <div class="app-container">
         <div>
         <p class="user-threads">My Threads</p>
-        {% if threads %}
-        {% for threads in user_threads.all %}
-        
+        {% if user_threads %}
+        {% for threads in user_threads %}
         <li class="list"><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
         {% endfor %}
         {% else %}
