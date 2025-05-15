@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if form.instance.header_image %}  
-        <img src="{{ form.instance.header_image.url }}" alt="Current header image" style="max-width: 200px;">
-    {% endif %}
-    <button type="submit">Save</button>
-</form>
+<div class="h-[600px] flex justify-center items-center">
+    <form method="post" class="forms">
+        <h1 class="form-text">ARTICLE DETAILS</h1>
+        {% csrf_token %}
+        <label for="title">Title</label>
+        {{ form.title }}
+        
+        <label for="entry">Entry</label>
+        {{ form.entry }}
+
+        <label for="category">Category</label>
+        {{ form.category }}
+        
+        <label for="header_image">Header Image</label>
+        {{ form.header_image }}
+        
+        <input type="submit" class="submit" value="SAVE">
+    </form>
+    </div>
 {% endblock %}

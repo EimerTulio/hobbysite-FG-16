@@ -3,20 +3,29 @@
 {% block title %}
     Update Article: {{ article.title }}
 {% endblock %}
-
-{% if request.user.is_authenticated %}
+    <div class="h-[500px] flex items-center justify-center mt-20">
+        
     {% block content %}
-        <h1>Update Article</h1>
+    <form method="POST" enctype="multipart/form-data" class="forms h-[500px]">
+        {% csrf_token %}
+        <a href="{% url 'wiki:article-list' %}" class="back-button">Back</a>
+        <h1 class="form-text">UPDATE ARTICLE</h1>
+        <label for="title" class="">Title</label>
+        {{form.title}}
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <h3>Upload Image(s)</h3>
-            <input type="file" name="image" multiple>
+        <label for="category" class="">Category</label>
+        {{form.category}}
 
-            <button type="submit">Update</button>
-        </form>
+        <label for="header_image" class="">Header Image</label>
+        {{form.header_image}}
 
-        <a href="{% url 'wiki:article-detail' article.pk %}">Back</a>
+        <label for="entry" class="">Entry</label>
+        {{form.entry}}
+
+        <label for="image">Upload Image(s)</label>
+        <input type="file" name="image" multiple>
+
+        <input type="submit" value="Update Article"></input>
+    </form>
+    </div>
     {% endblock %}
-{% endif %}

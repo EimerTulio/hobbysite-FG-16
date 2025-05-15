@@ -3,59 +3,72 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Product, Profile, Transaction
+from .models import Product, Transaction
 from .forms import TransactionForm, ProductForm
 
-# Create your views here.
 
 def merch_list(request):
-    """A view that shows the list of all products."""
+    """
+    Displays a list of all available products. 
+    Retrieves all products from the database 
+    and passes them to the template along with the current user's ID.
+    """
     merch = Product.objects.all()
     user_id = request.user.id
     ctx = {
-        "merch" : merch,
-        "user_id" : user_id
+        "merch": merch,
+        "user_id": user_id
     }
     return render(request, 'merchstore/merchstore_list.html', ctx)
 
+
 def merch_details(request, pk):
-    """A view that shows details about a product."""
+    """
+    Shows detailed information about a specific product. 
+    Handles the transaction form submission, updates the product stock, 
+    and redirects to the cart page after a successful purchase. 
+    If the user is not authenticated, redirects to the login page.
+    """
     product = get_object_or_404(Product, pk=pk)
-    user_id = request.user.id    
+    user_id = request.user.id
     form = TransactionForm()
 
-    if (request.method == "POST"):
+    if request.method == "POST":
         form = TransactionForm(request.POST)
+        form.set_product(product)
 
         if form.is_valid():
             t = Transaction()
             t.product = product
             t.amount = form.cleaned_data['amount']
             product.stock -= int(t.amount)
-            if (product.stock <= 0):
+            if product.stock <= 0:
                 product.status = "O"
-            if not (request.user.is_authenticated):
+            if not request.user.is_authenticated:
                 return HttpResponseRedirect(reverse('login') + "?next=" + request.path)
             t.buyer = request.user.profile
             t.save()
             product.save()
             return HttpResponseRedirect(reverse('merchstore:merch-cart'))
-            
 
     ctx = {
-        "product" : product,
-        "user_id" : user_id,
-        "form" : form,
+        "product": product,
+        "user_id": user_id,
+        "form": form,
     }
 
     return render(request, 'merchstore/merchstore_detail.html', ctx)
 
+
 @login_required
 def merch_create(request):
-    """A view that allows the user to create a product."""
-
+    """
+    Allows authenticated users to create a new product. 
+    Saves the product with the current user as the owner, 
+    and redirects to the product detail page upon success.
+    """
     form = ProductForm()
-    if (request.method == "POST"):
+    if request.method == "POST":
         form = ProductForm(request.POST)
 
         if form.is_valid():
@@ -69,18 +82,22 @@ def merch_create(request):
             p.status = form.update_status()
             p.save()
             return HttpResponseRedirect(reverse('merchstore:merch-detail', args=[p.pk]))
-        
+
     ctx = {
-        "form" : form,
+        "form": form,
     }
     return render(request, 'merchstore/merchstore_create.html', ctx)
-    
+
+
 @login_required
 def merch_update(request, pk):
-    """A view that allows the user to update a product's details."""
+    """
+    Enables authenticated users to update an existing product's details. 
+    Updates the product, and redirects to the product detail page upon success.
+    """
     product = get_object_or_404(Product, pk=pk)
     form = ProductForm(instance=product)
-    if (request.method == "POST"):
+    if request.method == "POST":
         form = ProductForm(request.POST, instance=product)
 
         if form.is_valid():
@@ -94,29 +111,37 @@ def merch_update(request, pk):
             return HttpResponseRedirect(reverse('merchstore:merch-detail', args=[pk]))
 
     ctx = {
-        "product" : product,
-        "form" : form,
+        "product": product,
+        "form": form,
     }
     return render(request, 'merchstore/merchstore_update.html', ctx)
 
+
 @login_required
 def merch_cart(request):
-    """A view that lists all products in the user's cart."""
+    """
+    Displays all transactions (cart items) for the authenticated user. 
+    Lists all transactions and passes them to the template along with the current user's ID.
+    """
     transactions = Transaction.objects.all()
     user_id = request.user.id
     ctx = {
-        "transactions" : transactions,
-        "user_id" : user_id,
+        "transactions": transactions,
+        "user_id": user_id,
     }
     return render(request, 'merchstore/merchstore_cart.html', ctx)
 
+
 @login_required
 def merch_transactions(request):
-    """A view that lists all transactions made with the user's store."""
+    """
+    Lists all transactions involving the authenticated user's store. 
+    Retrieves all transactions and passes them to the template along with the current user's ID.
+    """
     transactions = Transaction.objects.all()
     user_id = request.user.id
     ctx = {
-        "transactions" : transactions,
-        "user_id" : user_id,
+        "transactions": transactions,
+        "user_id": user_id,
     }
     return render(request, 'merchstore/merchstore_transactions.html', ctx)

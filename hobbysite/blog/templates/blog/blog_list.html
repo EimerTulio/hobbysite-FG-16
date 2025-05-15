@@ -1,36 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Blog Articles</h1>
+    <div class="app-container flex flex-col items-center text-center">
+        <h1 class="app-title">Blog Articles</h1>
 
-{% if user.is_authenticated %}
-<a href="{% url 'blog:article_create' %}">Create New Article</a>
+        {% if user.is_authenticated %}
 
-<h2>Your Articles</h2>
-<ul>
-    {% for article in user_articles %}
-        <li>
-            <a href="{% url 'blog:article_detail' article.id %}">{{ article.title }}</a>
-        </li>
-    {% empty %}
-        <li>You haven't written any articles yet</li>
-    {% endfor %}
-</ul>
-{% endif %}
+            <h2 class="user-threads">Your Articles</h2>
+            <ul class="product-list w-full flex flex-col items-center">
+                {% for article in user_articles %}
+                    <li class="list">
+                        <a class="category-url hover:text-emerald-200 text-white" href="{% url 'blog:article_detail' article.id %}">
+                            {{ article.title }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="list text-white">You haven't written any articles yet</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-<h2>All Articles</h2>
-{% for category in categories %}
-    <h3>{{ category.name }}</h3>
-    <ul>
-        {% for article in all_articles %}
-            {% if article.category == category %}
-                <li>
-                    <a href="{% url 'blog:article_detail' article.id %}">{{ article.title }}</a>
-                </li>
-            {% endif %}
-        {% empty %}
-            <li>No articles in this category.</li>
-        {% endfor %}
-    </ul>
-{% endfor %}
+        <h2 class="user-threads mt-10">All Articles</h2>
+        <div class="w-full flex flex-col items-center">
+            {% for category in categories %}
+                <h3 class="app-heading mt-6">{{ category.name }}</h3>
+                <ul class="product-list flex flex-col items-center">
+                    {% for article in all_articles %}
+                        {% if article.category == category %}
+                            <li class="list">
+                                <a class="category-url" href="{% url 'blog:article_detail' article.id %}">
+                                    {{ article.title }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% empty %}
+                        <li class="list text-white">No articles in this category.</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+        <div class="w-full flex justify-center mb-4">
+            <a class="create-button" href="{% url 'blog:article_create' %}">Create Article</a>
+        </div>
+    </div>
 {% endblock %}

@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block styles %}
-
 {% endblock %}
 
 {% block content %}
-    <main>
-    <h1>Add spiel here (HOME PAGE)</h1>
-    </main>
-    <footer>
-    <h4>add developer information</h4>
-    </footer>
+<main class="flex flex-col text-center mt-16 items-center relative z-10">
+  <h1 class="main-title">HOBBYSITE</h1>
+  <p class="text-white mt-[-15px] mb-2 uppercase font-audiowide text-xl">Welcome to FG-16's official hobbysite!</p>
+  <p class="mb-10 text-white">Lorem ipsum dolor sit amet. Et accusantium nihil vel placeat quia sed nihil velit rem velit minus.</p>
+  <a href="{% url 'merchstore:merch-list' %}" class="explore-btn">EXPLORE</a>
+</main>
 {% endblock %}

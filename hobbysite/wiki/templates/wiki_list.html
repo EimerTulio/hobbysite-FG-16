@@ -1,77 +1,87 @@
 {% extends 'base.html' %}
+
 {% block title %}
     Wiki Articles
 {% endblock %}
 
 {% block content %}
-    <h1 class="page-title-list">Wiki Articles</h1>
-    <br>
+<div class="flex flex-col items-center">
+    <h1 class="app-title">Wiki Articles</h1>
 
     {% if request.user.is_authenticated %}
+        <h2 class="user-threads text-white mt-10">Articles from Users</h2>
 
-        <h1> Articles from Users </h1>
         {% for articles in articles %}
-            <h2> {{ articles.name }} </h2>
-            <h5> {{ articles.description }} </h5>
-            {% if articles.article_category.all %}
-                {% for article in articles.article_category.all %}
-                    {% if article.author %}
-                        <li>
-                            <a href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
-                            <p> Created by : {{ article.author }} </p>
-                            <p> Created on : {{ article.created_on }} </p>
-                            <p> Last Updated on : {{ article.updated_on }} </p>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                <h5> No articles available </h5>
-            {% endif %}
+            <div class="no-color mb-6 w-[75%] flex-col">
+                <h3 class="app-heading">{{ articles.name }}</h3>
+                <p class="post-entry">{{ articles.description }}</p>
+
+                {% if articles.article_category.all %}
+                    <ul class="product-list mt-2">
+                        {% for article in articles.article_category.all %}
+                            {% if article.author %}
+                                <li class="list">
+                                    <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                                    <p class="comment-subinfo">Created on: {{ article.created_on }}</p>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="comment-subinfo mt-2">No articles available</p>
+                {% endif %}
+            </div>
         {% endfor %}
 
-        <br>
+        <h2 class="user-threads text-white mt-10">Articles from Other Users</h2>
 
-        <h1> Articles from Anonymous Users </h1>
         {% for articles in articles %}
-            <h2> {{ articles.name }} </h2>
-            <h5> {{ articles.description }} </h5>
-            {% if articles.article_category.all %}
-                {% for article in articles.article_category.all %}
-                    {% if not article.author %}
-                        <li>
-                            <a href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
-                            <p> Created on : {{ article.created_on }} </p>
-                            <p> Last Updated on : {{ article.updated_on }} </p>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                <h5> No articles available </h5>
-            {% endif %}
+            <div class="no-color mb-6 w-[75%] flex-col">
+                <h3 class="app-heading">{{ articles.name }}</h3>
+                <p class="post-entry">{{ articles.description }}</p>
+
+                {% if articles.article_category.all %}
+                    <ul class="product-list mt-2">
+                        {% for article in articles.article_category.all %}
+                            {% if not article.author %}
+                                <li class="list">
+                                    <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                                    <p class="comment-subinfo">Created on: {{ article.created_on }}</p>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="comment-subinfo mt-2">No articles available</p>
+                {% endif %}
+            </div>
         {% endfor %}
 
     {% else %}
+        <h2 class="user-threads text-white mt-10">All Articles</h2>
 
-        <h1> All Articles </h1>
         {% for articles in articles %}
-            <h2> {{ articles.name }} </h2>
-            <h5> {{ articles.description }} </h5>
-            {% if articles.article_category.all %}
-                {% for article in articles.article_category.all %}
-                    {% if not article.author %}
-                        <li>
-                            <a href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                <h5> No articles available </h5>
-            {% endif %}
-        {% endfor %}
+            <div class="no-color mb-6 w-[75%] flex-col">
+                <h3 class="app-heading">{{ articles.name }}</h3>
+                <p class="post-entry">{{ articles.description }}</p>
 
+                {% if articles.article_category.all %}
+                    <ul class="product-list mt-2">
+                        {% for article in articles.article_category.all %}
+                            {% if not article.author %}
+                                <li class="list">
+                                    <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="comment-subinfo mt-2">No articles available</p>
+                {% endif %}
+            </div>
+        {% endfor %}
     {% endif %}
 
-    <br>
-    <a href="{% url 'wiki:article-add' %}" style="font-size: 24px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">Add Article</a>
-    <br>
+    <a href="{% url 'wiki:article-add' %}" class="create-button mb-20">Add Article</a>
+</div>
 {% endblock %}
