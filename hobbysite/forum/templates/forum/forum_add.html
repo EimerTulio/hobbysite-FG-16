@@ -8,8 +8,8 @@ Add Threads
 {% endblock %}
 
 {% block content %}
-<div class="h-[500px] flex items-center justify-center mt-20">
-<form method="POST" enctype="multipart/form-data" class="forms h-[500px]">
+<div class="flex flex-col items-center justify-center mt-20">
+<form method="POST" enctype="multipart/form-data" class="forms flex-col">
     {% csrf_token %}
     <a class="back-button" href="{% url 'forum:post-category' %}">Go Back</a>
     <h1 class="form-text">CREATE THREAD</h1>
