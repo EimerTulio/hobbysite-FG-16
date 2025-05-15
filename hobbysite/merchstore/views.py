@@ -10,6 +10,8 @@ from .forms import TransactionForm, ProductForm
 Displays a list of all available products. 
 Retrieves all products from the database and passes them to the template along with the current user's ID.
 """
+
+
 def merch_list(request):
     """A view that shows the list of all products."""
     merch = Product.objects.all()
@@ -20,11 +22,14 @@ def merch_list(request):
     }
     return render(request, 'merchstore/merchstore_list.html', ctx)
 
+
 """
 Shows detailed information about a specific product. 
 Handles the transaction form submission, updates the product stock, and redirects to the cart page after a successful purchase. 
 If the user is not authenticated, redirects to the login page.
 """
+
+
 def merch_details(request, pk):
     """A view that shows details about a product."""
     product = get_object_or_404(Product, pk=pk)
@@ -57,10 +62,13 @@ def merch_details(request, pk):
 
     return render(request, 'merchstore/merchstore_detail.html', ctx)
 
+
 """
 Allows authenticated users to create a new product. 
 Saves the product with the current user as the owner, and redirects to the product detail page upon success.
 """
+
+
 @login_required
 def merch_create(request):
     """A view that allows the user to create a product."""
@@ -85,10 +93,13 @@ def merch_create(request):
     }
     return render(request, 'merchstore/merchstore_create.html', ctx)
 
+
 """
 Enables authenticated users to update an existing product's details. 
 Updates the product, and redirects to the product detail page upon success.
 """
+
+
 @login_required
 def merch_update(request, pk):
     """A view that allows the user to update a product's details."""
@@ -113,10 +124,13 @@ def merch_update(request, pk):
     }
     return render(request, 'merchstore/merchstore_update.html', ctx)
 
+
 """
 Displays all transactions (cart items) for the authenticated user. 
 Lists all transactions and passes them to the template along with the current user's ID.
 """
+
+
 @login_required
 def merch_cart(request):
     """A view that lists all products in the user's cart."""
@@ -128,10 +142,13 @@ def merch_cart(request):
     }
     return render(request, 'merchstore/merchstore_cart.html', ctx)
 
+
 """
 Lists all transactions involving the authenticated user's store. 
 Retrieves all transactions and passes them to the template along with the current user's ID.
 """
+
+
 @login_required
 def merch_transactions(request):
     """A view that lists all transactions made with the user's store."""

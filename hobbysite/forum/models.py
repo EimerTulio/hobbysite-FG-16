@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from user_management.models import Profile
 
+
 class ThreadCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -20,7 +21,8 @@ class ThreadCategory(models.Model):
 
 class Thread(models.Model):
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(Profile, null=True,on_delete=models.SET_NULL, related_name="thread")
+    author = models.ForeignKey(
+        Profile, null=True, on_delete=models.SET_NULL, related_name="thread")
     category = models.ForeignKey(
         ThreadCategory,
         null=True,
@@ -29,7 +31,7 @@ class Thread(models.Model):
     )
     entry = models.TextField()
     image = models.ImageField(upload_to="forum/", blank=True, null=True)
-    time_created = models.DateTimeField(auto_now_add=True) 
+    time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -55,13 +57,15 @@ class ThreadContent(models.Model):
 
     def __str__(self):
         return self.content
-    
+
+
 class Comment(models.Model):
-    author = models.ForeignKey(Profile, null=True,on_delete=models.SET_NULL, related_name="thread_comment")
+    author = models.ForeignKey(
+        Profile, null=True, on_delete=models.SET_NULL, related_name="thread_comment")
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     entry = models.TextField()
     time_created = models.DateTimeField(auto_now_add=True)
-    time_updated = models.DateTimeField(auto_now=True) 
+    time_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['time_created']
