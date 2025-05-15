@@ -5,9 +5,17 @@ from django.contrib.auth.models import User
 from .models import Profile
 from .forms import ProfileForm, RegisterForm
 
+"""
+Renders the unauthorized.html template when user attempts to perform action that requires login authentication
+"""
 def unauthorized_access(request):
     return render(request, 'user_management/unauthorized.html')
 
+"""
+Handles user registration. 
+Checks for duplicate usernames or emails, creates a new user and associated profile, logs the user in, and redirects to the profile creation page upon success.
+Displays error if validation fails.
+"""
 def profile_register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -34,6 +42,11 @@ def profile_register_view(request):
 
     return render(request, 'user_management/profile_register.html', {'form': form})
 
+"""
+Allows authenticated users to create a profile.
+Validates the profile form, associates the profile with the logged-in user, and redirects to the homepage upon success.
+Displays an error if the user already has a profile.
+"""
 @login_required
 def profile_create_view(request):
     if request.method == 'POST':
@@ -51,6 +64,11 @@ def profile_create_view(request):
 
     return render(request, 'user_management/profile_add.html', {'form': form})
 
+"""
+Enables authenticated users to update their profile.
+Validates the form data, ensures only the profile owner can make changes, and redirects to the homepage upon success.
+Renders the update form with existing profile data for editing.
+"""
 @login_required
 def profile_update_view(request, username):
     user = get_object_or_404(User, username=username)
