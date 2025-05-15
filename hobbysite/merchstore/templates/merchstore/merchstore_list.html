@@ -10,8 +10,14 @@
     <p class="app-subtitle text-center mb--5">Browse our collection</p>
 </span>
 <div class="app-container flex-col py-10 text-center mb-20 font-mono">
-
-    
+    <div class="gap-4 justify-center mb-10 mr-10">
+        {% url 'merchstore:merch-create' as merch_create %}
+        {% url 'merchstore:merch-cart' as merch_cart %}
+        {% url 'merchstore:merch-transactions' as merch_transactions %}
+        <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+        <a href="{{ merch_cart }}" class="create-button">Cart</a>
+        <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
+    </div>    
     <div class="text-left">
         <h2 class="user-threads">Your Products</h2>
         {% if user.is_authenticated %}
@@ -44,14 +50,6 @@
                 <p class="post-entry">No products available.</p>
             {% endfor %}
         </ul>
-    </div>
-    <div class="flex gap-4 justify-center mb-10 mr-10">
-        {% url 'merchstore:merch-create' as merch_create %}
-        {% url 'merchstore:merch-cart' as merch_cart %}
-        {% url 'merchstore:merch-transactions' as merch_transactions %}
-        <a href="{{ merch_create }}" class="create-button">Create a Product</a>
-        <a href="{{ merch_cart }}" class="create-button">Cart</a>
-        <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
     </div>
 </div>
 {% endblock %}

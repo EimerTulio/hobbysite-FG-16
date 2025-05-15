@@ -6,6 +6,14 @@
 
 {% block content %}
     <div class="app-container flex-col text-white font-mono">
+        <div class="gap-4 justify-center my-10">
+            {% url 'merchstore:merch-create' as merch_create %}
+            {% url 'merchstore:merch-transactions' as merch_transactions %}
+            {% url 'merchstore:merch-list' as merch_list %}
+            <a href="{{ merch_list }}" class="create-button">Merch List</a>
+            <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+            <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
+        </div>
         <ul class="space-y-6">
             <li class="user-threads">Your Purchases</li>
             {% for transaction in transactions %}
@@ -27,14 +35,5 @@
                 <li class="text-white italic">You haven't made any purchases yet.</li>
             {% endfor %}
         </ul>
-        <div class="flex gap-4 justify-center my-10">
-            {% url 'merchstore:merch-create' as merch_create %}
-            {% url 'merchstore:merch-transactions' as merch_transactions %}
-            {% url 'merchstore:merch-list' as merch_list %}
-            <a href="{{ merch_list }}" class="create-button">Merch List</a>
-            <a href="{{ merch_create }}" class="create-button">Create a Product</a>
-            <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
-        </div>
-
     </div>
 {% endblock %}
