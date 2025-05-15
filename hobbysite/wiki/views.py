@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from .models import ArticleCategory, Article, Comment, ArticleImage
 from .forms import ArticleForm, CommentForm, ArticleDetailForm, ArticleImageForm
 
+"""
+Displays a list of all articles, grouped by category.
+It returns the rendered wiki_list.html template.
+"""
 def article_list(request):
     '''Article list view for wiki articles'''
     articles = ArticleCategory.objects.all()
@@ -10,6 +14,12 @@ def article_list(request):
     }
     return render(request, 'wiki_list.html', ctx)
 
+"""
+Displays the details of a single article including comments and related articles.
+Handles comment submission for authenticated users.
+Along with the HttpRequest object (request), it takes in the primary key of the specific article to be displayed (pk)
+It returns the rendered wiki_detail.html template
+"""
 def article_detail(request, pk):
     '''Article detail view for wiki articles'''
     article = Article.objects.get(pk=pk)
@@ -45,6 +55,12 @@ def article_detail(request, pk):
     }
     return render(request, 'wiki_detail.html', ctx)
 
+"""
+Handles creation of new articles; only accessible to logged-in users.
+Automatically sets the author to the current user's profile.
+On GET: Empty article creation form
+On POST: Redirect to article list if valid, or form with errors
+"""
 def article_add(request):
     '''Article create view for wiki articles'''
     form = ArticleForm()
@@ -62,6 +78,13 @@ def article_add(request):
     ctx = {'form': form}
     return render(request, 'wiki_add.html', ctx)
 
+"""
+Handles editing of existing articles; only accessible to the article's author.
+Along with the HttpRequest object (request), it takes in the primary key of the specific article to edit (pk).
+On GET: Pre-populated article edit form
+On POST: Redirect to article list if valid, or form with errors
+Redirects to article list if user is not the author
+"""
 def article_update(request, pk):
     '''Article update view for wiki articles'''
     article = Article.objects.get(pk=pk)
