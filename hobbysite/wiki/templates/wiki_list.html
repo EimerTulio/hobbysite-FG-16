@@ -6,14 +6,72 @@
 {% block content %}
     <h1 class="page-title-list">Wiki Articles</h1>
     <br>
-    {% for articles in articles %}
-        <h2> {{articles.name}} </h2>
-        <h5> {{articles.description}} </h5>
-        {% for article in articles.articles.all %}
-            <a href="{% url 'wiki:article-detail' article.id %}">{{article.title}}</a>
-            <p> Created on : {{article.created_on}} </p>
-            <p> Last Updated on : {{article.updated_on}} </p>
+
+    {% if request.user.is_authenticated %}
+
+        <h1> Articles from Users </h1>
+        {% for articles in articles %}
+            <h2> {{ articles.name }} </h2>
+            <h5> {{ articles.description }} </h5>
+            {% if articles.article_category.all %}
+                {% for article in articles.article_category.all %}
+                    {% if article.author %}
+                        <li>
+                            <a href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                            <p> Created by : {{ article.author }} </p>
+                            <p> Created on : {{ article.created_on }} </p>
+                            <p> Last Updated on : {{ article.updated_on }} </p>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h5> No articles available </h5>
+            {% endif %}
         {% endfor %}
+
         <br>
-    {% endfor %}
+
+        <h1> Articles from Anonymous Users </h1>
+        {% for articles in articles %}
+            <h2> {{ articles.name }} </h2>
+            <h5> {{ articles.description }} </h5>
+            {% if articles.article_category.all %}
+                {% for article in articles.article_category.all %}
+                    {% if not article.author %}
+                        <li>
+                            <a href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                            <p> Created on : {{ article.created_on }} </p>
+                            <p> Last Updated on : {{ article.updated_on }} </p>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h5> No articles available </h5>
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+
+        <h1> All Articles </h1>
+        {% for articles in articles %}
+            <h2> {{ articles.name }} </h2>
+            <h5> {{ articles.description }} </h5>
+            {% if articles.article_category.all %}
+                {% for article in articles.article_category.all %}
+                    {% if not article.author %}
+                        <li>
+                            <a href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h5> No articles available </h5>
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+
+    <br>
+    <a href="{% url 'wiki:article-add' %}" style="font-size: 24px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">Add Article</a>
+    <br>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ArticleCategory, Article
+from .models import ArticleCategory, Article, Comment
 # Register your models here.
 
 class ArticleInline(admin.TabularInline):
@@ -12,6 +12,10 @@ class ArticleCategoryAdmin(admin.ModelAdmin):
     ordering = ['name']
     inlines = [
         ArticleInline,
-    ]    
-admin.site.register(ArticleCategory, ArticleCategoryAdmin)
+    ]
+    
+class CommentAdmin(admin.ModelAdmin):
+    model = Comment
 
+admin.site.register(ArticleCategory, ArticleCategoryAdmin)
+admin.site.register(Comment)
