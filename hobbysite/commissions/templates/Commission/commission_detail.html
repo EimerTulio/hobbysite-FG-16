@@ -23,12 +23,8 @@
                     <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
                         {% csrf_token %}
                         <input type="hidden" name="job_id" value="{{ job.id }}">
-                        <button type="submit" name="apply_job" class="apply-button">Apply to Job</button>
+                        <button type="submit" name="apply_job" class="create-button">Apply to Job</button>
                     </form>    
-                    {% else %}
-    <button class="commission-btn my-5 bg-blue-600 hover:bg-blue-700 text-white font-audiowide py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 uppercase">
-        Apply to Job
-    </button>
     {% endif %}
 {% else %}
     <button disabled class="commission-btn uppercase bg-gray-400 cursor-not-allowed text-white font-audiowide p-1 rounded-md my-5">
@@ -48,8 +44,8 @@
                 <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="application_id" value="{{ application.id }}">
-                    <button type="submit" name="accept_application">Accept</button>
-                    <button type="submit" name="reject_application">Reject</button>
+                    <button type="submit" name="accept_application" class="create-button">Accept</button>
+                    <button type="submit" name="reject_application" class="create-button">Reject</button>
                 </form>
             </div>
         {% endif %}

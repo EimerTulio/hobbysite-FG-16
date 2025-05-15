@@ -71,7 +71,7 @@ def article_create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
-            profile, created = Profile.objects.get_or_create(user=request.user)
+            profile = Profile.objects.get_or_create(user=request.user)
             article = form.save(commit=False)
             article.author = profile
             article.save()

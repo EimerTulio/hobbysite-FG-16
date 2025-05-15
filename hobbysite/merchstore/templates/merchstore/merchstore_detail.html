@@ -27,7 +27,7 @@
             <p><strong class="text-emerald-800">Status:</strong> {{ product.get_status_display }}</p>
             <p><strong class="text-emerald-800">Price:</strong> {{ product.price }}</p>
             <p><strong class="text-emerald-800">Category:</strong> {{ product.product_type }}</p>
-            <p><strong class="text-emerald-800">Seller:</strong> {{ product.owner.name }}</p>
+            <p><strong class="text-emerald-800">Seller:</strong> {{ product.owner.user }}</p>
             <p><strong class="text-emerald-800">Description:</strong> {{ product.description }}</p>
             <p><strong class="text-emerald-800">In stock:</strong> {{ product.stock }}</p>
             
