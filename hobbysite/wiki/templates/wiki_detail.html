@@ -11,7 +11,12 @@
     <p class="app-subtitle text-center mb-1">{{ article.category }}</p>
 
     <p class="app-subtitle text-center mb-4">
-        Created by: {% if article.author %}{{ article.author }}{% else %}Anonymous{% endif %}
+        Created by: 
+        {% if article.author %}
+            {{ article.author.user }}
+        {% else %}
+            Anonymous
+        {% endif %}
     </p>
     <p class="app-subtitle text-center mb-6 text-sm text-gray-400">
         Created on {{ article.created_on }}<br>Last Updated on {{ article.updated_on }}
@@ -73,7 +78,7 @@
                     {% for comment in article.comment_article.all %}
                         <div class="no-color flex-col text-center text-white">
                             <h5 class="comment-entry mb-1 font-semibold">{{ comment.entry }}</h5>
-                            <p class="comment-subinfo text-sm text-gray-400">Commented by: {{ comment.author }}</p>
+                            <p class="comment-subinfo text-sm text-gray-400">Commented by: {{ comment.author.user }}</p>
                             <p class="comment-subinfo text-sm text-gray-400">Commented on: {{ comment.created_on }}</p>
                         </div>
                     {% endfor %}

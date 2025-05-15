@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import ArticleCategory, Article, Comment, ArticleImage
 from .forms import ArticleForm, CommentForm, ArticleDetailForm, ArticleImageForm
+from django.contrib.auth.decorators import login_required
 
 """
 Displays a list of all articles, grouped by category.
@@ -85,13 +86,14 @@ On GET: Pre-populated article edit form
 On POST: Redirect to article list if valid, or form with errors
 Redirects to article list if user is not the author
 """
+@login_required
 def article_update(request, pk):
     '''Article update view for wiki articles'''
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
         form = ArticleDetailForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
-            form.save() 
+            form.save()
         # Handle multiple image uploads
         if 'image' in request.FILES:
             for img in request.FILES.getlist('image'):

@@ -13,15 +13,14 @@
     <div class="no-color"> 
         <div>
         <ul>
-                    <li>
-                            <p class="post-entry text-center mb-5">
-                                {{ thread.entry }}
-                            </p>
-                    </li>
-                    <li>{% if thread.image %}
-                        <img class="post-entry-image" src="{{thread.image.url}}" >
-                        {% endif %}</li>
-                
+            <li>
+                <p class="post-entry text-center mb-5">
+                    {{ thread.entry }}
+                </p>
+            </li>
+            <li>{% if thread.image %}
+                <img class="post-entry-image" src="{{thread.image.url}}" >
+                {% endif %}</li>
             </ul>
         <div>
             

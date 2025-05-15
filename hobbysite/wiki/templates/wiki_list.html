@@ -14,6 +14,7 @@
         {% for articles in articles %}
             <div class="no-color mb-6 w-[75%] flex-col">
                 <h3 class="app-heading">{{ articles.name }}</h3>
+                <p class="post-entry">{{ articles.description }}</p>
 
                 {% if articles.article_category.all %}
                     <ul class="product-list mt-2">
@@ -35,8 +36,9 @@
         <h2 class="user-threads text-white mt-10">Articles from Other Users</h2>
 
         {% for articles in articles %}
-            <div class="no-color mb-6 w-[75%]">
+            <div class="no-color mb-6 w-[75%] flex-col">
                 <h3 class="app-heading">{{ articles.name }}</h3>
+                <p class="post-entry">{{ articles.description }}</p>
 
                 {% if articles.article_category.all %}
                     <ul class="product-list mt-2">
@@ -59,7 +61,7 @@
         <h2 class="user-threads text-white mt-10">All Articles</h2>
 
         {% for articles in articles %}
-            <div class="no-color mb-6 w-[75%]">
+            <div class="no-color mb-6 w-[75%] flex-col">
                 <h3 class="app-heading">{{ articles.name }}</h3>
                 <p class="post-entry">{{ articles.description }}</p>
 
