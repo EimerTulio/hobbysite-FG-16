@@ -29,9 +29,7 @@ def detail_view(request, pk):
     threads = get_object_or_404(Thread, pk=pk)
     related_threads = Thread.objects.filter(category=threads.category).exclude(pk=threads.pk)
     profile= None
-    comments = Comment.objects.none()
-    if comments.exists(): 
-        comments = Comment.objects.filter(thread = threads)
+    comments = Comment.objects.filter(thread = threads)
     if request.user.is_authenticated:
         profile = request.user.profile
     if request.method == "POST":

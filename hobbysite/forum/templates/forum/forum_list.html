@@ -10,7 +10,7 @@
         <p class="app-subtitle text-center">A place where ideas can be exchanged.</p>
     </span>
         {% if not user.is_authenticated %}
-        <div class="app-container">
+        <div class="app-container flex-col">
             <ul class="">
                 {% for category in categories %}
                     <li class="list">
@@ -33,19 +33,28 @@
         <div class="app-container">
         <div>
         <p class="user-threads">My Threads</p>
+        {% if threads %}
         {% for threads in user_threads.all %}
         
         <li class="list"><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
         {% endfor %}
+        {% else %}
+        <li class="list mb-5">You have no threads yet.</li>
+        {% endif %}
         <p class="user-threads">All Threads</p>
         {% for cat in other_categories %}
         <p class="app-heading">{{cat}}</p>
+        {% if other_threads %}
             {% for thread in other_threads %}
             {% if thread.category == cat %}
             <li class="list"><a href="{{ thread.get_absolute_url }}">{{thread}}</a></li>
             {% endif %}
             {% endfor %}
+        {% else %}
+        <li class="list mb-5">No threads in this category yet.</li>
+        {% endif %}
         {% endfor %}
+        
         {% endif %}
     </ul>
     <div class="w-full flex justify-center mt-5">

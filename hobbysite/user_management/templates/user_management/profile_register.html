@@ -9,9 +9,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="h-[500px] flex items-center justify-center">
+<div class="h-[500px] flex items-center justify-center p-10">
 <form method="post" class="forms">
     {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="bg-red-100 text-red-700 border border-red-400 rounded px-4 py-2 mb-2 mt-4">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
     <h1 class="form-text">REGISTER PROFILE</h1>
     <label for="username" class="">Username</label>
     {{form.username}}

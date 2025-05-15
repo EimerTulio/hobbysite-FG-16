@@ -14,7 +14,7 @@
         <div>
         <ul>
                     <li>
-                            <p class="post-entry">
+                            <p class="post-entry text-center mb-5">
                                 {{ thread.entry }}
                             </p>
                     </li>
@@ -26,39 +26,46 @@
         <div>
             
             {% if thread.author == profile %}
-            <a class="back-button mb-5" href="{% url 'forum:thread-edit' pk=thread.pk%}">Edit Thread</a>
+            <a class="back-button uppercase mb-5 text-emerald-600" href="{% url 'forum:thread-edit' pk=thread.pk%}">Edit Thread</a>
             {% else %}
 
             {% endif %}
         </div>
-        <div>
-            <div class="related-posts">
-                Related Posts:
-                <ul><li>
-                    {% for thread in related_threads %}
-                    <a href="{{ thread.get_absolute_url }}" class="related-links">{{thread}},</a>
-                    {% endfor %}</li>
-                </ul>
-            </div>
-            </div>
         </div>
     </div>
+    <div>
+        <div >
+            <p class="user-threads text-white mt-5">Related Posts:</p>
+            <ul><li class="text-center">
+                {% for thread in related_threads %}
+                <a href="{{ thread.get_absolute_url }}" class="related-links">{{thread}},</a>
+                {% endfor %}</li>
+            </ul>
+        </div>
+        </div>
     <div class="flex flex-col">
         <p class="user-threads text-white mt-5">COMMENTS</p>
         <div class="flex flex-col">
+            {% if comments %}
             {% for comment in comments %}
             <div class="no-color flex-col">
                 <h3 class="comment-entry">{{comment.entry}}</h3> 
-                <p class="comment-subinfo">Posted by {{comment.author}}</p>
+                {% if comment.author %}
+                <p class="comment-subinfo">Commented by {{comment.author}}</p>
+                {% else %}
+                <p class="comment-subinfo">Commented by guest</p>
+                {% endif %}
                 <p class="comment-subinfo">Posted on {{comment.time_created}}</p>
             </div>
             {% endfor %}
+            {% else %}
+            <p class="comment-subinfo text-center text-white uppercase text-[20px]">No Comments Yet</p>
+            {% endif %}
         </div>
     </div>
     {% if user.is_authenticated %}
         <form method="post" class="comment-form">
             {% csrf_token %}
-            <label for="entry" class="">Comment</label>
             <textarea name="entry" rows="10" cols="50" class="w-[75%] text-white font-mono focus:bg-emerald-700/60"></textarea>
             <input type="submit" value="COMMENT" class="comment-button">
         </form>
