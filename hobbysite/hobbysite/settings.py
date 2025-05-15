@@ -91,12 +91,17 @@ WSGI_APPLICATION = 'hobbysite.wsgi.application'
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 if DEVELOPMENT_MODE is True:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    if os.getenv("DATABASE_URL"):
+        DATABASES = {
+            "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
         }
-    }
+    else:
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+            }
+        }
 elif len(sys.argv) > 0 and sys.argv[1] not in ['collectstatic', 'makemigrations', 'migrate']:
     database_url = os.getenv("DATABASE_URL")
     if not database_url:
@@ -107,13 +112,17 @@ elif len(sys.argv) > 0 and sys.argv[1] not in ['collectstatic', 'makemigrations'
             "default": dj_database_url.parse(database_url),
         }
 else:
-    # Fallback (you can use sqlite or skip setup)
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    if os.getenv("DATABASE_URL"):
+        DATABASES = {
+            "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
         }
-    }
+    else:
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+            }
+        }
 
 
 
