@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Merchstore
+{% endblock %}
+
+{% block content %}
+<span class="flex flex-col justify-center items-center">
+    <h1 class="app-title">Merchstore</h1>
+    <p class="app-subtitle text-center mb--5">Browse our collection</p>
+</span>
+<div class="app-container flex-col py-10 text-center mb-20 font-mono">
+    <div class="gap-4 justify-center mb-10 mr-10">
+        {% url 'merchstore:merch-create' as merch_create %}
+        {% url 'merchstore:merch-cart' as merch_cart %}
+        {% url 'merchstore:merch-transactions' as merch_transactions %}
+        <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+        <a href="{{ merch_cart }}" class="create-button">Cart</a>
+        <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
+    </div>    
+    <div class="text-left">
+        <h2 class="user-threads">Your Products</h2>
+        {% if user.is_authenticated %}
+            <ul class="space-y-2 mb-8">
+                {% for product in merch %}
+                    {% if product.owner.user.id == user_id %}
+                    <li class="post-entry">
+                        <a class="category-url hover:text-emerald-400" href="{{ product.get_absolute_url }}">
+                            {{ product.name }}
+                        </a>
+                    </li>
+                    {% endif %}
+                {% empty %}
+                    <p class="post-entry">No products created yet.</p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <h2 class="user-threads">All Products</h2>
+        <ul class="space-y-2">
+            {% for product in merch %}
+                {% if not product.owner.user.id == user_id %}
+                <li class="post-entry">
+                    <a class="category-url hover:text-emerald-400 font-mono text-[14px]" href="{{ product.get_absolute_url }}">
+                        {{ product.name }}
+                    </a>
+                </li>
+                {% endif %}
+            {% empty %}
+                <p class="post-entry">No products available.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

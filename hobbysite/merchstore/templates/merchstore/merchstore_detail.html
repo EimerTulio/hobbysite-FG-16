@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ product.name }} | Merchstore
+{% endblock %}
+
+{% block content %}
+<span class="flex flex-col justify-center items-center">
+    <h1 class="app-title">{{ product.name }}</h1>
+    <p class="app-subtitle text-center">{{ product.product_type }}</p>
+</span>
+<div class="app-container flex-col">
+    <div class="font-mono text-white space-y-4">
+        <div class="gap-4 justify-center mt-10">
+            {% url 'merchstore:merch-create' as merch_create %}
+            {% url 'merchstore:merch-cart' as merch_cart %}
+            {% url 'merchstore:merch-transactions' as merch_transactions %}
+            {% url 'merchstore:merch-list' as merch_list %}
+            <a href="{{ merch_list }}" class="create-button">Merch List</a>
+            <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+            <a href="{{ merch_cart }}" class="create-button">Cart</a>
+            <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
+        </div>
+        <h2 class="user-threads">Product Details</h2>
+        
+        <div class="space-y-2">
+            <p><strong class="text-emerald-800">Status:</strong> {{ product.get_status_display }}</p>
+            <p><strong class="text-emerald-800">Price:</strong> {{ product.price }}</p>
+            <p><strong class="text-emerald-800">Category:</strong> {{ product.product_type }}</p>
+            <p><strong class="text-emerald-800">Seller:</strong> {{ product.owner.name }}</p>
+            <p><strong class="text-emerald-800">Description:</strong> {{ product.description }}</p>
+            <p><strong class="text-emerald-800">In stock:</strong> {{ product.stock }}</p>
+            
+            {% if product.owner.user.id == user_id %}
+                <a href="{{ product.get_update_url }}" class="comment-button mt-4">Edit Product</a>
+            {% endif %}
+        </div>
+
+        {% if not product.owner.user.id == user_id %}
+        <div class="mt-6">
+            <form method="post" class="flex flex-col items-center">
+                {% csrf_token %}
+                <div class="w-full max-w-xs">
+                    {% for field in form %}
+                        <div class="mb-4">
+                            <label class="block text-white font-audiowide uppercase mb-1">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                {% if product.stock > 0 %}
+                    <button type="submit" class="comment-button mt-4">
+                        Buy Now
+                    </button>
+                {% else %}
+                    <p class="text-red-400 font-audiowide uppercase mt-4">Out of Stock</p>
+                {% endif %}
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

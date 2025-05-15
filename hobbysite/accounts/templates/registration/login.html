@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+{% else %}
+<div class="h-[600px] flex items-center justify-center">
+<form method="post" class="forms h-96">
+    {% csrf_token %}
+    <h1 class="form-text">LOGIN</h1>
+    {% if form.non_field_errors %}
+    <div class="bg-red-100 text-red-700 border border-red-400 rounded px-4 py-2 mb-2 mt-4">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+    <label for="username" class="">Username</label>
+    <input type="text" name="username" id="username" class="">
+    <label for="password" class="">Password</label>
+    <input type="password" name="password" id="password" class="">
+    <input type="submit" class="submit"></input>
+    <hr class="outline-1 outline-emerald-600 mt-6">
+
+{% endif %}
+<div class="flex flex-row gap-x-4 mt-5">
+<a href="{% url 'user_management:profile-register' %}" class="other-btns w-[50%] text-center outline-emerald-800 outline-2 hover:bg-emerald-600">Register</a>
+<a href="{% url 'password_reset' %}" class="other-btns text-center w-[50%] outline-emerald-800 outline-2 hover:bg-emerald-600">Forgot Password</a></div></form>
+</div>
+{% endblock %}

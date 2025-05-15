@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Threads
+{% endblock %}
+
+{% block content %}
+    <span>
+        <h1 class="app-title">Welcome To Forum</h1>
+        <p class="app-subtitle text-center">A place where ideas can be exchanged.</p>
+    </span>
+        {% if not user.is_authenticated %}
+        <div class="app-container flex-col">
+            <ul class="">
+                <p class="user-threads">All Threads</p>
+                {% if categories %}
+                {% for category in categories %}
+                    <li class="list">
+                        <div>
+                            <p class="">
+                                <p class="app-heading">
+                                    {{ category }}
+                                </p>
+                            </p>
+                            {% for post in category.post_category.all %}
+                                <a href="{{post.get_absolute_url}}">{{ post.title }}</p>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endfor %}
+                {% else %}
+                    <li class="list mb-5">No Categories Yet</li>
+                {% endif %}
+            
+            
+        
+        {% else %}
+        <div class="app-container">
+        <div>
+        <p class="user-threads">My Threads</p>
+        {% if user_threads %}
+        {% for threads in user_threads %}
+        <li class="list"><a href="{{threads.get_absolute_url}}">{{threads}}</a></li>
+        {% endfor %}
+        {% else %}
+        <li class="list mb-5">You have no threads yet.</li>
+        {% endif %}
+        <p class="user-threads">All Threads</p>
+        {% for cat in other_categories %}
+        <p class="app-heading">{{cat}}</p>
+        {% if other_threads %}
+            {% for thread in other_threads %}
+            {% if thread.category == cat %}
+            <li class="list"><a href="{{ thread.get_absolute_url }}">{{thread}}</a></li>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+        <li class="list mb-5">No threads in this category yet.</li>
+        {% endif %}
+        {% endfor %}
+        
+        {% endif %}
+    </ul>
+    <div class="w-full flex justify-center mt-5">
+        <a class="create-button" href="{% url 'forum:thread-add' %}">Create Thread</a>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+{% endblock %}

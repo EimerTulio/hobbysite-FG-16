@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Merchstore
+{% endblock %}
+
+{% block content %}
+    <div class="app-container flex-col text-white font-mono">
+        <div class="gap-4 justify-center my-10">
+            {% url 'merchstore:merch-create' as merch_create %}
+            {% url 'merchstore:merch-transactions' as merch_transactions %}
+            {% url 'merchstore:merch-list' as merch_list %}
+            <a href="{{ merch_list }}" class="create-button">Merch List</a>
+            <a href="{{ merch_create }}" class="create-button">Create a Product</a>
+            <a href="{{ merch_transactions }}" class="create-button">Your Orders</a>
+        </div>
+        <ul class="space-y-6">
+            <li class="user-threads">Your Purchases</li>
+            {% for transaction in transactions %}
+                {% if transaction.buyer.user.id == user_id %}
+                    <li class="border p-4 rounded-lg bg-gray-800 shadow-md">
+                        <div class="mb-2">
+                            <a class="text-emerald-300 text-lg underline hover:text-emerald-200" href="{{ transaction.product.get_absolute_url }}">
+                                {{ transaction.product.name }}
+                            </a>
+                        </div>
+                        <div>Owner: <span class="text-emerald-400">{{ transaction.product.owner.name }}</span></div>
+                        <div>Price: <span class="text-emerald-400">{{ transaction.product.price }}</span></div>
+                        <div>Amount: <span class="text-emerald-400">{{ transaction.amount }}</span></div>
+                        <div>Status: <span class="text-emerald-400">{{ transaction.get_status_display }}</span></div>
+                        <div>Transaction started on: <span class="text-emerald-400">{{ transaction.created_on }}</span></div>
+                    </li>
+                {% endif %}
+            {% empty %}
+                <li class="text-white italic">You haven't made any purchases yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
