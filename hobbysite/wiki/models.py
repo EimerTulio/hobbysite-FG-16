@@ -7,7 +7,7 @@ class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     def __str__(self):
-        return '{}: ArticleCategory'.format(self.name)
+        return '{}'.format(self.name)
     
     def get_absolute_url(self):
         return reverse('wiki:article-list')

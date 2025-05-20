@@ -18,19 +18,25 @@
                 <p><strong>Manpower Required:</strong> {{ job.manpower_required }}</p>
                 <p><strong>Open Slots:</strong> {{ job.get_open_slots }}</p>
 
-                {% if job.get_open_slots > 0 %}
+                
+
+                {% if job.status == "Closed" %}
+                <button disabled class="commission-btn uppercase bg-red-500 cursor-not-allowed text-white font-audiowide p-1 rounded-md my-5">
+                    Job Closed
+                </button>
+                {% elif job.get_open_slots == 0 %}
+                <button disabled class="commission-btn uppercase bg-gray-400 cursor-not-allowed text-white font-audiowide p-1 rounded-md my-5">
+                    Job Full
+                </button>
+                {% else %}
                     {% if commission.get_author != request.user.profile %}
-                    <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="job_id" value="{{ job.id }}">
-                        <button type="submit" name="apply_job" class="create-button">Apply to Job</button>
-                    </form>    
-    {% endif %}
-{% else %}
-    <button disabled class="commission-btn uppercase bg-gray-400 cursor-not-allowed text-white font-audiowide p-1 rounded-md my-5">
-        Job Full
-    </button>
-{% endif %}
+                        <form method="POST" action="{% url 'commissions:commission_detail' commission.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="job_id" value="{{ job.id }}">
+                            <button type="submit" name="apply_job" class="create-button">Apply to Job</button>
+                        </form>    
+                    {% endif %}
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -66,6 +72,7 @@
         {% endif %}
         {% if is_owner %}
         <a href="{% url 'commissions:commission_update' commission.id %}" class="back-button">Edit Commission</a>
+        <a href="{% url 'commissions:job_update' commission.id %}" class="back-button">Edit Jobs</a>
     {% endif %}
     </div>
     </div>
