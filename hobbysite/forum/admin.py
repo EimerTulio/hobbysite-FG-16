@@ -1,8 +1,10 @@
 from django.contrib import admin
+
 from .models import ThreadCategory, Thread, Comment
 
 
 class ThreadCategoryAdmin(admin.ModelAdmin):
+    """Lists all thread categories and their details."""
     model = ThreadCategory
     search_fields = ('name',)
     list_display = ('name',)
@@ -15,6 +17,7 @@ class ThreadCategoryAdmin(admin.ModelAdmin):
 
 
 class ThreadAdmin(admin.ModelAdmin):
+    """Lists all threads and their details."""
     model = Thread
     search_fields = ('title',)
     list_display = ('title', 'time_created')
@@ -25,7 +28,9 @@ class ThreadAdmin(admin.ModelAdmin):
         ),
     ]
 
+
 class CommentAdmin(admin.ModelAdmin):
+    """Lists every comment posted and their details."""
     model = Comment
     search_fields = ('author', 'thread')
     list_display = ('author', 'thread')

@@ -5,6 +5,10 @@ from user_management.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 
+"""
+Displays a list of all commissions, sorted by status priority and creation date.
+For authenticated users, also shows commissions they created and applied to.
+"""
 def commission_list(request):
     commissions = list(Commission.objects.all())
     commissions.sort(key=lambda c: (c.status_order(), -c.created_on.timestamp()))
@@ -31,6 +35,10 @@ def commission_list(request):
     }
     return render(request, 'commission/commission_list.html', ctx)
 
+"""
+Shows details of a specific commission including jobs, comments, and applications.
+Handles job applications and application approvals/rejections via POST requests.
+"""
 def commission_detail(request, commission_id):
     commission = get_object_or_404(Commission, id=commission_id)
     comments = Comment.objects.filter(commission=commission).order_by('-created_on')
@@ -89,6 +97,10 @@ def commission_detail(request, commission_id):
 
     return render(request, 'commission/commission_detail.html', ctx)
 
+"""
+Handles creation of new commissions; only accessible to logged-in users.
+Automatically sets the author to the current user's profile.
+"""
 @login_required
 def commission_create(request):
     if request.method == 'POST':
@@ -103,6 +115,10 @@ def commission_create(request):
 
     return render(request, 'commission/commission_update.html', {'form': form})
     
+"""
+Allows commission owners to edit their commissions. 
+Automatically updates commission status if all jobs become full.
+"""
 @login_required
 def commission_update(request, commission_id):
     commission = get_object_or_404(Commission, id=commission_id)
@@ -131,6 +147,9 @@ def commission_update(request, commission_id):
         'commission': commission,
     })
 
+"""
+Allows commission owners to add new jobs to their commission.
+"""
 @login_required
 def job_create(request, commission_id):
     commission = get_object_or_404(Commission, id=commission_id)
@@ -150,6 +169,9 @@ def job_create(request, commission_id):
 
     return render(request, 'commission/job_form.html', {'form': form, 'commission': commission})
 
+"""
+Handles approval/rejection of job applications by commission owners.
+"""
 @login_required
 def job_application_action(request, application_id, action):
     application = get_object_or_404(JobApplication, id=application_id)
@@ -172,6 +194,10 @@ def job_application_action(request, application_id, action):
 
     return redirect('commissions:commission_detail', commission_id=application.job.commission.id)
 
+"""
+Handles job application submissions from users.
+Prevents commission owners from applying to their own jobs.
+"""
 @login_required
 def job_application(request, commission_id, job_id):
     commission = get_object_or_404(Commission, id=commission_id)

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Apply for a Job{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Apply for a Job in {{ commission.title }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Render the form fields -->
+
+        <button type="submit">Apply</button>
+    </form>
+
+    <h3>Available Jobs:</h3>
+    <ul>
+        {% for job in jobs %}
+            <li>
+                <a href="{% url 'commissions:job_application_form' commission.id job.id %}">
+                    {{ job.role }} - {{ job.status }} (Open Slots: {{ job.open_slots }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
