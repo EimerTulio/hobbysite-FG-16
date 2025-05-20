@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="h-[600px] flex justify-center items-center">
-    <form method="post" class="forms">
+    <form method="post" class="forms" enctype="multipart/form-data">
         <h1 class="form-text">ARTICLE DETAILS</h1>
         {% csrf_token %}
         <label for="title">Title</label>
