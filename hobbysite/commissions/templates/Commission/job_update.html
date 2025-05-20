@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="h-[500px] flex flex-col items-center justify-center mt-20">
+    <form method="POST" class="forms mb-6">
+        {% csrf_token %}
+        <a href="{% url 'commissions:commission_detail' commission.id %}" class="back-button">Back</a>
+        <h1 class="form-text mb-4">UPDATE JOB FOR COMMISSION: {{ commission.title }}</h1>
+
+        <label for="job_select" class="block mb-2">Select Job</label>
+        <select name="job_select" id="job_select" onchange="this.form.submit()" class="mb-4 p-2 border border-gray-300 rounded">
+            <option value="">-- Select a Job --</option>
+            {% for job in jobs %}
+                <option value="{{ job.id }}" {% if selected_job and job.id == selected_job.id %}selected{% endif %}>
+                    {{ job.role }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if form %}
+    <form method="POST" class="forms flex flex-col items-center justify-center mt-20">
+        {% csrf_token %}
+        <input type="hidden" name="job_id" value="{{ selected_job.id }}">
+
+        <label for="id_status" class="block mt-4">Status</label>
+        {{ form.status }}
+
+        <label for="id_manpower_required" class="block mt-4">Manpower Required</label>
+        {{ form.manpower_required }}
+
+        <input type="submit" name="update_job" class="mt-6 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+    </input>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

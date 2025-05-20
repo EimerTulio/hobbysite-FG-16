@@ -105,7 +105,7 @@ if DEVELOPMENT_MODE is True:
 elif len(sys.argv) > 0 and sys.argv[1] not in ['collectstatic', 'makemigrations', 'migrate']:
     database_url = os.getenv("DATABASE_URL")
     if not database_url:
-        print("Warning: DATABASE_URL not defined. Skipping DB setup during build.")
+        print("Warning: DATABASE_URL not defined. Skipping DB setup during build.") # This is to prevent the database from being set up during build which can lead to errors and issues.
         DATABASES = {}
     else:
         DATABASES = {

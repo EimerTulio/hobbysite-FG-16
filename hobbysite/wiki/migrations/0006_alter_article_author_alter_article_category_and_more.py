@@ -7,6 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('user_management', '0001_initial'),
         ('user_management', '0005_profile_mobile_profile_nickname'),
         ('wiki', '0005_alter_articlecategory_options_alter_article_category_and_more'),
     ]
