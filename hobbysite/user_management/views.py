@@ -2,8 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+
 from .models import Profile
 from .forms import ProfileForm, RegisterForm
+from merchstore.models import Transaction
+from wiki.models import Article as WikiArticle
+from blog.models import Article as BlogArticle
+from forum.models import Thread
+from commissions.models import Commission, JobApplication
 
 """
 Renders the unauthorized.html template when user attempts to perform action that requires login authentication
@@ -85,3 +91,32 @@ def profile_update_view(request, username):
         form = ProfileForm(instance=profile)
 
     return render(request, 'user_management/profile_update.html', {'form': form})
+
+@login_required
+def profile_detail_view(request, username):
+    """
+    Compiles all of the user's contributions to the website.
+    """
+    user = get_object_or_404(User, username=username)
+    
+    if request.user != user:
+        return redirect('user_management:forbidden')  # or handle unauthorized access
+
+    merch = Transaction.objects.all()
+    articles = WikiArticle.objects.all()
+    blogs = BlogArticle.objects.all()
+    threads = Thread.objects.all()
+    commissions = Commission.objects.all()
+    jobs = JobApplication.objects.all()
+
+    ctx = {
+        "user" : user,
+        "merch" : merch,
+        "articles" : articles,
+        "blogs" : blogs,
+        "threads" : threads,
+        "commissions" : commissions,
+        "jobs" : jobs,
+    }
+
+    return render(request, 'user_management/profile_creations.html', ctx)
