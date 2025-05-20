@@ -6,80 +6,91 @@
 
 {% block content %}
 <div class="flex flex-col items-center">
+    
     <h1 class="app-title">Wiki Articles</h1>
 
     {% if request.user.is_authenticated %}
         <h2 class="user-threads text-white mt-10">Articles from Users</h2>
+        {% if articles %}
+            {% for articles in articles %}
+                <div class="no-color mb-6 w-[75%] flex-col">
+                    <h3 class="app-heading">{{ articles.name }}</h3>
+                    <p class="post-entry">{{ articles.description }}</p>
 
-        {% for articles in articles %}
-            <div class="no-color mb-6 w-[75%] flex-col">
-                <h3 class="app-heading">{{ articles.name }}</h3>
-                <p class="post-entry">{{ articles.description }}</p>
-
-                {% if articles.article_category.all %}
-                    <ul class="product-list mt-2">
-                        {% for article in articles.article_category.all %}
-                            {% if article.author %}
-                                <li class="list">
-                                    <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
-                                    <p class="comment-subinfo">Created on: {{ article.created_on }}</p>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="comment-subinfo mt-2">No articles available</p>
-                {% endif %}
-            </div>
-        {% endfor %}
+                    {% if articles.article_category.all %}
+                        <ul class="product-list mt-2">
+                            {% for article in articles.article_category.all %}
+                                {% if article.author %}
+                                    <li class="list">
+                                        <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                                        <p class="comment-subinfo">Created on: {{ article.created_on }}</p>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="comment-subinfo mt-2">No articles available</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="comment-subinfo mt-2">No articles found.</p>
+        {% endif %}
 
         <h2 class="user-threads text-white mt-10">Articles from Other Users</h2>
+        {% if articles%}
+            {% for articles in articles %}
+                <div class="no-color mb-6 w-[75%] flex-col">
+                    <h3 class="app-heading">{{ articles.name }}</h3>
+                    <p class="post-entry">{{ articles.description }}</p>
 
-        {% for articles in articles %}
-            <div class="no-color mb-6 w-[75%] flex-col">
-                <h3 class="app-heading">{{ articles.name }}</h3>
-                <p class="post-entry">{{ articles.description }}</p>
-
-                {% if articles.article_category.all %}
-                    <ul class="product-list mt-2">
-                        {% for article in articles.article_category.all %}
-                            {% if not article.author %}
-                                <li class="list">
-                                    <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
-                                    <p class="comment-subinfo">Created on: {{ article.created_on }}</p>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="comment-subinfo mt-2">No articles available</p>
-                {% endif %}
-            </div>
-        {% endfor %}
+                    {% if articles.article_category.all %}
+                        <ul class="product-list mt-2">
+                            {% for article in articles.article_category.all %}
+                                {% if not article.author %}
+                                    <li class="list">
+                                        <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                                        <p class="comment-subinfo">Created on: {{ article.created_on }}</p>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="comment-subinfo mt-2">No articles available</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="comment-subinfo mt-2">No articles found.</p>
+        {% endif %}
 
     {% else %}
         <h2 class="user-threads text-white mt-10">All Articles</h2>
 
-        {% for articles in articles %}
-            <div class="no-color mb-6 w-[75%] flex-col">
-                <h3 class="app-heading">{{ articles.name }}</h3>
-                <p class="post-entry">{{ articles.description }}</p>
+        {% if articles%}
+            {% for articles in articles %}
+                <div class="no-color mb-6 w-[75%] flex-col">
+                    <h3 class="app-heading">{{ articles.name }}</h3>
+                    <p class="post-entry">{{ articles.description }}</p>
 
-                {% if articles.article_category.all %}
-                    <ul class="product-list mt-2">
-                        {% for article in articles.article_category.all %}
-                            {% if not article.author %}
-                                <li class="list">
-                                    <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="comment-subinfo mt-2">No articles available</p>
-                {% endif %}
-            </div>
-        {% endfor %}
+                    {% if articles.article_category.all %}
+                        <ul class="product-list mt-2">
+                            {% for article in articles.article_category.all %}
+                                {% if not article.author %}
+                                    <li class="list">
+                                        <a class="category-url" href="{% url 'wiki:article-detail' article.id %}">{{ article.title }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="comment-subinfo mt-2">No articles available</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="comment-subinfo mt-2">No articles found.</p>
+        {% endif %}
     {% endif %}
 
     <a href="{% url 'wiki:article-add' %}" class="create-button mb-20">Add Article</a>
