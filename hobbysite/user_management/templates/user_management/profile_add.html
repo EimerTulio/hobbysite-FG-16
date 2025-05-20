@@ -9,10 +9,22 @@
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Create Profile">
-</form>
-
+<div class="h-[600px] flex justify-center items-center">
+    <form method="post" class="forms">
+        <h1 class="form-text">CREATE PROFILE</h1>
+        {% csrf_token %}
+        <label for="id_name">Name</label>
+        {{ form.name }}
+        
+        <label for="id_nickname">Nickname</label>
+        {{ form.nickname }}
+        
+        <label for="id_email">Email</label>
+        {{ form.email }}
+        
+        <label for="id_mobile">Mobile</label>
+        {{ form.mobile }}
+        <input type="submit" class="submit" value="Update">
+    </form>
+    </div>
 {% endblock %}
