@@ -7,6 +7,7 @@ from .forms import (
 )
 
 
+@login_required
 def commission_list(request):
     """
     Displays a list of all commissions, sorted by status and creation date.
@@ -44,6 +45,7 @@ def commission_list(request):
     return render(request, 'commission/commission_list.html', ctx)
 
 
+@login_required
 def commission_detail(request, commission_id):
     """
     Shows details of a commission with jobs and applications.

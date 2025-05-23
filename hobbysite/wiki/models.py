@@ -64,10 +64,10 @@ class Comment(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     def __str__(self):
         return '{}: Comment'.format(self.author.user.username)
-    
+
     class Meta:
         ordering = ['-created_on']
-        
+
 class ArticleImage(models.Model):
     '''ArticleImage model for wiki articles'''
     image = models.ImageField(null=True, upload_to='article_images/')
